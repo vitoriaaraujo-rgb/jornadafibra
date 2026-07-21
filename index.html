@@ -67,6 +67,10 @@
   .pri.P0{background:var(--p0)} .pri.P1{background:var(--p1)} .pri.P2{background:var(--p2)} .pri.P3{background:var(--p3)}
   .stt{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px}
   .stt.gap{background:var(--gap-soft);color:var(--gap)} .stt.ress{background:var(--ress-soft);color:var(--ress)} .stt.ok{background:var(--ok-soft);color:var(--ok)}
+  .addb{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.03em}
+  .addb.nova{background:#e6f0ff;color:#2f5fd0}
+  .addb.candidata{background:#f3edff;color:#7a3fd0}
+  .tc.add-candidata{border-left-style:dashed}
   .field{margin-top:9px}
   .field .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;margin-bottom:3px}
   .field .fv{font-size:12.8px;color:var(--ink-2)}
@@ -158,6 +162,7 @@
     <button class="fbtn" data-f="ress" onclick="filt('ress')"><span class="d" style="background:var(--ress)"></span>Tagueado c/ ressalva</button>
     <button class="fbtn" data-f="gap" onclick="filt('gap')"><span class="d" style="background:var(--gap)"></span>Gap real</button>
     <button class="fbtn" data-f="P1" onclick="filt('P1')">P1 · os 70%</button>
+    <button class="fbtn" data-f="add" onclick="filt('add')"><span class="d" style="background:#7a3fd0"></span>Novas / candidatas</button>
   </div>
 
   <div id="map"></div>
@@ -171,7 +176,7 @@
 
   <footer>
     <span>Status: <b style="color:var(--ok)">confiável</b> · <b style="color:var(--ress)">tagueado c/ ressalva</b> · <b style="color:var(--gap)">gap real</b> — avaliação a validar com TI/BI</span>
-    <span>v2 · escopo onboarding · reconciliado com eventos do app · rascunho para revalidação</span>
+    <span>v2.1 · revisado (IAT, auditoria sem motivo, rota da fibra) · escopo onboarding · rascunho para revalidação</span>
   </footer>
 </div>
 
@@ -196,24 +201,30 @@ const PH=[
   {tag:'abandono 4',name:'Selfie reprovada',pri:'P1',st:'ress',
    tags:['but_onb_bio_conf_selfie_sim','but_onb_bio_conf_selfie_nao'],
    act:'Ressalva 2: o tag mede preferência (aceitar/refazer), não falha sistêmica. O sinal de reprovação + motivo tem que vir da validação do Único, por tentativa.',src:'Único (validação)'},
-  {tag:'abandono 5',name:'Documento reprovado',pri:'P1',st:'gap',
+  {tag:'abandono 5',name:'Documento — frente reprovada',pri:'P1',st:'gap',
    tags:['Quebra sinalizada: envio da frente do doc'],
-   act:'Quebra já apontada no envio da frente do documento. Investigar a causa e capturar o resultado sistêmico do Único (frente/verso) por tentativa — não a revisão de foto.',src:'Único (validação)'},
+   act:'Quebra já apontada no envio da frente do documento. Investigar a causa e capturar o resultado sistêmico do Único por tentativa — não a revisão de foto.',src:'Único (validação)'},
+  {tag:'abandono 5b',add:'candidata',name:'Documento — verso reprovado',pri:'P1',st:'gap',tags:[],
+   act:'Nova: o fluxo tem uma decisão de verso separada da frente, mas sem quebra mapeada. Mesmo tratamento do Único por tentativa. Validar se é ponto de perda real.',src:'Único (validação)'},
   {tag:'abandono 6',name:'Falha na assinatura do contrato',pri:'P1',st:'ress',
    tags:['but_onb_contrato_conf_sim','but_onb_contrato_conf_nao','but_onb_contrato_assin_sucesso','but_onb_contrato_assin_erro','but_onb_contrato_ir_final','but_onb_contrato_cancel_final'],
    act:'Conjunto mais completo. Ressalva 3: confirmar que os eventos de contrato não se misturam com os de etiqueta na tela dinâmica. Troca de plano está fora do escopo deste tracking.',src:'D4Sign'},
  ]},
  {n:3,t:'Auditoria e disponibilidade',breaks:[
-  {tag:'abandono 7',name:'Reprovado na auditoria',pri:'P2',st:'ress',tags:[],
-   act:'Consolidar taxa de aprovação, motivos e lead time de auditoria.',src:'Backoffice / Revan'},
-  {tag:'abandono 8',name:'Indisponível',pri:'P2',st:'gap',tags:[],
-   act:'Criar evento de viabilidade por motivo + flag auto/manual. Peso de "coordenada" liga ao projeto de captura automática (obs.: só captura coordenada, não altera endereço).',src:'BrisaAgenda + Maps API'},
+  {tag:'abandono 7',name:'Reprovado na auditoria',pri:'P2',st:'gap',tags:[],
+   act:'Correção: não há informação dos motivos de reprovação hoje. Dá pra ver que reprovou, não por quê. Criar captura de motivo (+ lead time) — sem isso não dá pra atacar a causa.',src:'Backoffice / Revan'},
+  {tag:'abandono 8a',name:'Disponibilidade — sem viabilidade',pri:'P2',st:'gap',tags:[],
+   act:'Correção: a verificação de disponibilidade da fibra não tem tracking. Criar evento de resultado por motivo (cobertura, porta, coordenada) + flag auto/manual. "Coordenada" liga ao projeto de captura automática.',src:'BrisaAgenda + Maps API'},
+  {tag:'abandono 8b',add:'nova',name:'Rota não confirmada',pri:'P2',st:'gap',tags:[],
+   act:'Nova (fibra): a confirmação de rota é uma etapa separada da disponibilidade e também está sem tracking — hoje totalmente invisível. Criar evento de resultado da confirmação de rota.',src:'BrisaAgenda'},
  ]},
  {n:4,t:'Agendamento e instalação',breaks:[
+  {tag:'abandono 9-pre',add:'candidata',name:'Agendamento não concluído',pri:'P3',st:'gap',tags:[],
+   act:'Nova: a decisão "agendamento concluído?" não tinha quebra no fluxo original. Cliente vê os horários mas pode não confirmar. Verificar se há evento; provável gap.',src:'BrisaAgenda'},
   {tag:'abandono 9',name:'Contato de confirmação sem sucesso',pri:'P3',st:'gap',tags:[],
    act:'Criar evento de tentativa/resultado de contato, amarrado ao orçamento.',src:'Genesys / OLOS'},
-  {tag:'abandono 10',name:'Instalação não realizada',pri:'P3',st:'ress',tags:[],
-   act:'Improdutivas já acompanhadas no War Room. Detalhar motivo e amarrar ao funil ponta a ponta.',src:'BrisaAgenda / campo'},
+  {tag:'abandono 10',name:'Instalação não realizada',pri:'P3',st:'ress',tags:['Base do time de IAT (improdutivas + desatribuições)'],
+   act:'Correção: são as improdutivas e desatribuições acompanhadas pelo time de IAT. Reaproveitar essa base e amarrar ao ID do orçamento no funil. Dois modos: improdutiva (visita sem sucesso) e desatribuição (OS retirada do técnico antes da visita).',src:'IAT'},
  ]},
 ];
 
@@ -225,9 +236,10 @@ PH.forEach(p=>{
   const blk=b.blk?'blk':'';
   const stlabel=b.st==='gap'?'gap real':(b.st==='ress'?'tagueado c/ ressalva':'confiável');
   const tagsHtml=b.tags&&b.tags.length?b.tags.map(t=>`<code>${t}</code>`).join(''):'<span class="none">nenhum evento ainda</span>';
-  return `<div class="tc ${cls} ${blk}" data-pri="${b.pri}" data-st="${b.st}">
+  const addb=b.add?`<span class="addb ${b.add}">${b.add}</span>`:'';
+  return `<div class="tc ${cls} ${blk} ${b.add?'add-'+b.add:''}" data-pri="${b.pri}" data-st="${b.st}" data-add="${b.add||''}">
     <div class="th"><span class="tag">${b.tag}</span><span class="name">${b.name}</span>
-      <span class="badges"><span class="pri ${b.pri}">${b.pri}</span><span class="stt ${b.st}">${stlabel}</span></span></div>
+      <span class="badges">${addb}<span class="pri ${b.pri}">${b.pri}</span><span class="stt ${b.st}">${stlabel}</span></span></div>
     <div class="field"><div class="fl">Eventos já existentes</div><div class="tags">${tagsHtml}</div></div>
     <div class="field act"><div class="fl">Ressalva → ação</div><div class="fv">${b.act}</div></div>
     <div class="field"><div class="fl">Fonte confiável do sinal</div><span class="src">${b.src}</span></div>
@@ -238,7 +250,7 @@ PH.forEach(p=>{
 function filt(f){
  document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
  document.querySelectorAll('.tc').forEach(c=>{
-  const show=f==='all'||(f==='P1'?c.dataset.pri==='P1':c.dataset.st===f);
+  const show=f==='all'||(f==='P1'?c.dataset.pri==='P1':(f==='add'?!!c.dataset.add:c.dataset.st===f));
   c.classList.toggle('hidden',!show);
  });
  document.querySelectorAll('.phase').forEach(ph=>{
@@ -253,12 +265,14 @@ const F=[
  {name:'Entrou no app', vol:750, ph:1, leak:{n:'abandono 1', t:'Não iniciou formalização'}},
  {name:'Etiqueta assinada', vol:680, ph:2, leak:{n:'abandono 2', t:'Etiqueta'}},
  {name:'Selfie validada', vol:560, ph:2, leak:{n:'abandono 3-4', t:'Biometria / selfie'}},
- {name:'Documento validado', vol:470, ph:2, leak:{n:'abandono 5', t:'Documento (frente)'}},
- {name:'Contrato assinado', vol:430, ph:2, leak:{n:'abandono 6', t:'Assinatura do contrato'}},
- {name:'Auditoria aprovada', vol:405, ph:3, leak:{n:'abandono 7', t:'Reprovado na auditoria'}},
- {name:'Disponível p/ agendar', vol:370, ph:3, leak:{n:'abandono 8', t:'Indisponível'}},
- {name:'Agendamento confirmado', vol:355, ph:4, leak:{n:'abandono 9', t:'Contato sem sucesso'}},
- {name:'Instalado — fibra ativa', vol:320, ph:4, leak:{n:'abandono 10', t:'Instalação não realizada'}},
+ {name:'Frente do doc validada', vol:500, ph:2, leak:{n:'abandono 5', t:'Documento — frente'}},
+ {name:'Verso do doc validado', vol:470, ph:2, leak:{n:'abandono 5b', t:'Documento — verso'}},
+ {name:'Contrato assinado', vol:440, ph:2, leak:{n:'abandono 6', t:'Assinatura do contrato'}},
+ {name:'Auditoria aprovada', vol:415, ph:3, leak:{n:'abandono 7', t:'Reprovado na auditoria'}},
+ {name:'Disponibilidade confirmada', vol:385, ph:3, leak:{n:'abandono 8a', t:'Sem viabilidade'}},
+ {name:'Rota confirmada', vol:365, ph:3, leak:{n:'abandono 8b', t:'Rota (fibra)'}},
+ {name:'Agendamento confirmado', vol:345, ph:4, leak:{n:'abandono 9', t:'Contato / não concluído'}},
+ {name:'Instalado — fibra ativa', vol:310, ph:4, leak:{n:'abandono 10', t:'Improdutiva / desatribuição (IAT)'}},
 ];
 const PHC={1:'var(--canal)',2:'var(--app)',3:'var(--bko)',4:'var(--agenda)'};
 let fnBuilt=false;
