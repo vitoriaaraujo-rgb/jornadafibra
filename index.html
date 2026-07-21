@@ -76,6 +76,26 @@
   .field.act .fl{color:var(--brand)} .field.act .fv{color:var(--ink);font-weight:500}
   .src{display:inline-block;font-size:11.5px;font-weight:700;color:var(--ink);background:#f2f0ec;padding:2px 8px;border-radius:5px}
   footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .viewtabs{display:flex;gap:6px;margin:22px 0 2px}
+  .vtab{border:1px solid var(--line);background:var(--white);color:var(--ink-2);padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
+  .vtab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .fn-banner{background:var(--ress-soft);border:1px solid #f0dcbd;color:#7a5200;font-size:12.5px;padding:11px 14px;border-radius:10px;margin:22px 0 18px}
+  .fn-summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+  .fn-summary .fs{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:13px 16px;flex:1;min-width:150px}
+  .fn-summary .fsn{font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .fn-summary .fs.hot{border-left:3px solid var(--brand)}
+  .fn-summary .fs.hot .fsn{color:var(--brand);font-size:16px}
+  .fn-summary .fsl{font-size:12px;color:var(--muted);margin-top:2px}
+  .fn-track{max-width:640px;margin:0 auto;text-align:center}
+  .fn-stage{margin-bottom:3px}
+  .fn-leak{font-size:11.5px;color:var(--gap);margin:6px 0 4px;font-weight:600}
+  .fn-leak b{color:var(--gap)}
+  .fn-barwrap{margin:0 auto;transition:width .25s ease;min-width:210px}
+  .fn-bar{display:flex;align-items:center;justify-content:space-between;color:#fff;border-radius:9px;padding:11px 14px;gap:10px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .fn-bar .nm{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fn-bar .rt{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+  .fn-bar input{width:62px;border:none;border-radius:6px;padding:4px 7px;font-size:12.5px;font-weight:800;text-align:right;font-family:inherit;background:rgba(255,255,255,.92);color:var(--ink)}
+  .fn-pct{font-size:12px;opacity:.92;min-width:36px;text-align:right;font-weight:700}
   .hidden{display:none!important}
   @media print{.controls{display:none}body{background:#fff}header::after{display:none}.tc,.cv{break-inside:avoid}}
 </style>
@@ -91,6 +111,12 @@
 
 <div class="wrap">
 
+  <div class="viewtabs">
+    <button class="vtab on" id="vt-map" onclick="setView('map')">Mapa de tagueamento</button>
+    <button class="vtab" id="vt-funnel" onclick="setView('funnel')">Funil de conversão</button>
+  </div>
+
+  <div id="view-map">
   <div class="thesis">
     <div class="ic">!</div>
     <p><b>Reframe:</b> a formalização já tem eventos (<b>etiqueta, selfie e contrato</b> estão tagueados). Mas três armadilhas estruturais fazem o dado existente medir a coisa errada. Antes de criar indicador novo, é preciso <b>tornar confiável o que já é coletado</b>.</p>
@@ -135,6 +161,13 @@
   </div>
 
   <div id="map"></div>
+  </div><!--/view-map-->
+
+  <div id="view-funnel" class="hidden">
+    <div class="fn-banner"><b>Números ilustrativos</b> (exemplo da reunião + estimativa). Edite cada etapa e substitua pelos valores reais conforme instrumentar — a conversão e as quedas recalculam sozinhas.</div>
+    <div class="fn-summary" id="fnSum"></div>
+    <div class="fn-track" id="funnel"></div>
+  </div>
 
   <footer>
     <span>Status: <b style="color:var(--ok)">confiável</b> · <b style="color:var(--ress)">tagueado c/ ressalva</b> · <b style="color:var(--gap)">gap real</b> — avaliação a validar com TI/BI</span>
@@ -212,6 +245,51 @@ function filt(f){
   const any=[...ph.querySelectorAll('.tc')].some(c=>!c.classList.contains('hidden'));
   ph.classList.toggle('hidden',!any);
  });
+}
+const F=[
+ {name:'Orçamentos criados', vol:1000, ph:1},
+ {name:'Sem débito', vol:900, ph:1, leak:{n:'bloqueio', t:'Débito pendente'}},
+ {name:'Aprovado no antifraude', vol:800, ph:1, leak:{n:'bloqueio', t:'Barrado no antifraude'}},
+ {name:'Entrou no app', vol:750, ph:1, leak:{n:'abandono 1', t:'Não iniciou formalização'}},
+ {name:'Etiqueta assinada', vol:680, ph:2, leak:{n:'abandono 2', t:'Etiqueta'}},
+ {name:'Selfie validada', vol:560, ph:2, leak:{n:'abandono 3-4', t:'Biometria / selfie'}},
+ {name:'Documento validado', vol:470, ph:2, leak:{n:'abandono 5', t:'Documento (frente)'}},
+ {name:'Contrato assinado', vol:430, ph:2, leak:{n:'abandono 6', t:'Assinatura do contrato'}},
+ {name:'Auditoria aprovada', vol:405, ph:3, leak:{n:'abandono 7', t:'Reprovado na auditoria'}},
+ {name:'Disponível p/ agendar', vol:370, ph:3, leak:{n:'abandono 8', t:'Indisponível'}},
+ {name:'Agendamento confirmado', vol:355, ph:4, leak:{n:'abandono 9', t:'Contato sem sucesso'}},
+ {name:'Instalado — fibra ativa', vol:320, ph:4, leak:{n:'abandono 10', t:'Instalação não realizada'}},
+];
+const PHC={1:'var(--canal)',2:'var(--app)',3:'var(--bko)',4:'var(--agenda)'};
+let fnBuilt=false;
+function buildFunnel(){
+ const track=document.getElementById('funnel');
+ track.innerHTML=F.map((s,i)=>`<div class="fn-stage">${s.leak?`<div class="fn-leak" id="lk${i}"></div>`:''}<div class="fn-barwrap" id="bw${i}"><div class="fn-bar" style="background:${i===F.length-1?'var(--ok)':PHC[s.ph]}"><span class="nm">${s.name}</span><span class="rt"><input type="number" id="in${i}" value="${s.vol}" min="0"><span class="fn-pct" id="pc${i}"></span></span></div></div></div>`).join('');
+ F.forEach((s,i)=>document.getElementById('in'+i).addEventListener('input',updateFunnel));
+ updateFunnel();
+}
+function updateFunnel(){
+ const vols=F.map((s,i)=>Math.max(0,+document.getElementById('in'+i).value||0));
+ const top=vols[0]||1;
+ F.forEach((s,i)=>{
+  document.getElementById('bw'+i).style.width=Math.max(14,vols[i]/top*100)+'%';
+  document.getElementById('pc'+i).textContent=Math.round(vols[i]/top*100)+'%';
+  if(i>0&&s.leak){
+   const lost=vols[i-1]-vols[i], dp=vols[i-1]?Math.round(lost/vols[i-1]*100):0;
+   document.getElementById('lk'+i).innerHTML=lost>0?`↘ −${lost} · ${dp}% · <b>${s.leak.n}</b> · ${s.leak.t}`:`<span style="color:var(--muted);font-weight:600">sem perda · ${s.leak.n}</span>`;
+  }
+ });
+ const last=vols[vols.length-1], conv=Math.round(last/top*100);
+ let md={dp:-1,n:'—',t:'',lost:0};
+ F.forEach((s,i)=>{if(i>0&&s.leak){const lost=vols[i-1]-vols[i],dp=vols[i-1]?lost/vols[i-1]*100:0;if(dp>md.dp)md={dp,n:s.leak.n,t:s.leak.t,lost};}});
+ document.getElementById('fnSum').innerHTML=`<div class="fs"><div class="fsn">${conv}%</div><div class="fsl">conversão ponta a ponta</div></div><div class="fs"><div class="fsn">${top-last}</div><div class="fsl">perdidos no caminho (de ${top})</div></div><div class="fs hot"><div class="fsn">${md.n}</div><div class="fsl">maior queda relativa · ${md.t} (${Math.round(md.dp)}%)</div></div>`;
+}
+function setView(v){
+ document.getElementById('view-map').classList.toggle('hidden',v!=='map');
+ document.getElementById('view-funnel').classList.toggle('hidden',v!=='funnel');
+ document.getElementById('vt-map').classList.toggle('on',v==='map');
+ document.getElementById('vt-funnel').classList.toggle('on',v==='funnel');
+ if(v==='funnel'&&!fnBuilt){buildFunnel();fnBuilt=true;}
 }
 </script>
 </body>
