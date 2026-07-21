@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de Tagueamento v2 — Jornada da Fibra · Brisanet</title>
+<style>
+  :root{
+    --ink:#1c1c1e;--ink-2:#3a3a3e;--muted:#7a7a82;--line:#e6e4e0;
+    --paper:#faf9f7;--white:#ffffff;--brand:#ff5200;--brand-soft:#fff1ea;
+    --canal:#4b57c9;--app:#ff5200;--bko:#8b52c9;--agenda:#2f7fe0;--cliente:#118a6e;
+    --gap:#d93b3b;--gap-soft:#fdeceb;--ress:#b06a00;--ress-soft:#fff6e6;--ok:#128a52;--ok-soft:#e9f6ee;
+    --p0:#ff5200;--p1:#c0392b;--p2:#b06a00;--p3:#7a7a82;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;padding-bottom:60px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  header{background:var(--ink);color:#fff;padding:34px 0 30px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;background:radial-gradient(circle,var(--brand) 0%,transparent 68%);opacity:.28}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);font-weight:700;display:flex;align-items:center;gap:10px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+  h1{font-size:clamp(25px,4vw,38px);font-weight:800;letter-spacing:-.02em;margin:12px 0 6px;line-height:1.1}
+  .sub{color:#c9c8cc;font-size:16px;max-width:700px}
+
+  .thesis{background:var(--brand-soft);border:1px solid #ffd9c6;border-left:4px solid var(--brand);border-radius:12px;padding:16px 18px;margin:24px 0 4px;display:flex;gap:14px}
+  .thesis .ic{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px}
+  .thesis p{font-size:14.5px;color:#7a3410}
+  .thesis b{color:#b53a00}
+
+  .sechd{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800;margin:30px 0 12px}
+
+  .caveats{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .cv{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:15px 16px;border-top:3px solid var(--ress)}
+  .cv .cn{display:flex;align-items:center;gap:8px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ress);font-weight:800;margin-bottom:7px}
+  .cv .cn .num{background:var(--ress);color:#fff;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px}
+  .cv .ch{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .cv p{font-size:12.5px;color:var(--ink-2)}
+  .cv .aff{margin-top:8px;font-size:11px;color:var(--gap);font-weight:700}
+
+  .found{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .fc{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 15px;border-top:3px solid var(--ok)}
+  .fc .ft{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ok);font-weight:800;margin-bottom:5px}
+  .fc .fh{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+  .fc p{font-size:12.5px;color:var(--ink-2)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:30px 0 4px;position:sticky;top:0;z-index:20;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line)}
+  .controls .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-right:2px}
+  .fbtn{border:1px solid var(--line);background:var(--white);color:var(--ink-2);padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .14s}
+  .fbtn:hover{border-color:#d3d0cb}
+  .fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .fbtn .d{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+  .phase{margin-top:24px}
+  .phase h2{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .phase h2 .pn{background:var(--ink);color:#fff;font-size:12px;padding:3px 9px;border-radius:7px}
+  .phase h2 .lane{font-size:10.5px;font-weight:800;text-transform:uppercase;color:#fff;padding:3px 8px;border-radius:6px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+  .tc{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 15px;border-left:4px solid var(--gap)}
+  .tc.ress{border-left-color:var(--ress)} .tc.ok{border-left-color:var(--ok)}
+  .tc .th{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px}
+  .tc .tag{flex:0 0 auto;background:var(--gap);color:#fff;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .tc.ress .tag{background:var(--ress)} .tc.ok .tag{background:var(--ok)} .tc.blk .tag{background:var(--bko)}
+  .tc .name{font-size:14.5px;font-weight:700;color:var(--ink);flex:1;line-height:1.3}
+  .badges{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
+  .pri{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px;color:#fff}
+  .pri.P0{background:var(--p0)} .pri.P1{background:var(--p1)} .pri.P2{background:var(--p2)} .pri.P3{background:var(--p3)}
+  .stt{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px}
+  .stt.gap{background:var(--gap-soft);color:var(--gap)} .stt.ress{background:var(--ress-soft);color:var(--ress)} .stt.ok{background:var(--ok-soft);color:var(--ok)}
+  .field{margin-top:9px}
+  .field .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;margin-bottom:3px}
+  .field .fv{font-size:12.8px;color:var(--ink-2)}
+  .tags{display:flex;flex-wrap:wrap;gap:4px}
+  .tags code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;background:#f1f4ff;border:1px solid #dfe4fb;color:#3a45a8;padding:2px 7px;border-radius:5px}
+  .tags .none{font-size:12px;color:var(--gap);font-weight:700}
+  .field.act .fl{color:var(--brand)} .field.act .fv{color:var(--ink);font-weight:500}
+  .src{display:inline-block;font-size:11.5px;font-weight:700;color:var(--ink);background:#f2f0ec;padding:2px 8px;border-radius:5px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .hidden{display:none!important}
+  @media print{.controls{display:none}body{background:#fff}header::after{display:none}.tc,.cv{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>Brisanet · Jornada da Fibra · Instrumentação · v2</div>
+    <h1>Tagueamento — o que já existe vs. o que falta</h1>
+    <p class="sub">Reconciliado com os eventos já implementados no app. A questão não é criar tags — é resolver três ressalvas de confiabilidade que hoje impedem de ler o abandono real. Escopo: fluxo de onboarding (troca de plano fora).</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="thesis">
+    <div class="ic">!</div>
+    <p><b>Reframe:</b> a formalização já tem eventos (<b>etiqueta, selfie e contrato</b> estão tagueados). Mas três armadilhas estruturais fazem o dado existente medir a coisa errada. Antes de criar indicador novo, é preciso <b>tornar confiável o que já é coletado</b>.</p>
+  </div>
+
+  <div class="sechd">As 3 ressalvas estruturais — o foco da fase</div>
+  <div class="caveats">
+    <div class="cv">
+      <div class="cn"><span class="num">1</span>Captura pelo SDK</div>
+      <div class="ch">Início da selfie é cego</div>
+      <p>O SDK pode iniciar a captura automaticamente ao enquadrar o rosto, sem clique em "Estou pronto". O evento de clique não marca o início real da captura.</p>
+      <div class="aff">Afeta: abandono 3 e 4 (selfie)</div>
+    </div>
+    <div class="cv">
+      <div class="cn"><span class="num">2</span>Tela de revisão de foto</div>
+      <div class="ch">Refazer ≠ falha sistêmica</div>
+      <p>Aceitar ou refazer a foto reflete preferência do cliente, não erro do sistema. A interação nessa tela não distingue falha técnica de gosto pessoal.</p>
+      <div class="aff">Afeta: abandono 4 e 5 (selfie e documento)</div>
+    </div>
+    <div class="cv">
+      <div class="cn"><span class="num">3</span>Tela dinâmica de contratos</div>
+      <div class="ch">Etiqueta e contrato podem se misturar</div>
+      <p>A mesma tela renderiza a etiqueta e os contratos de onboarding. Os eventos de botão são distintos (etiq × contrato), mas contadores genéricos de página não separam qual assinatura ocorreu.</p>
+      <div class="aff">Afeta: abandono 2 e abandono 6 · escopo só onboarding</div>
+    </div>
+  </div>
+
+  <div class="sechd">Fundações de medição</div>
+  <div class="found">
+    <div class="fc"><div class="ft">Chave de correlação</div><div class="fh">ID do orçamento</div><p>Correlacionador único do funil — cruzamento por CPF está bloqueado.</p></div>
+    <div class="fc"><div class="ft">Início da formalização</div><div class="fh">Contador "Quero Contratar"</div><p>Já existe. Serve de denominador de quem começou o fluxo no app.</p></div>
+    <div class="fc"><div class="ft">Cuidado de modelagem</div><div class="fh">Jornada não-linear</div><p>Fotos e contratos fora de ordem: medir por estado, não por sequência.</p></div>
+  </div>
+
+  <div class="sechd">Reconciliação por ponto de quebra</div>
+  <div class="controls">
+    <span class="lbl">Filtrar</span>
+    <button class="fbtn on" data-f="all" onclick="filt('all')">Todos</button>
+    <button class="fbtn" data-f="ress" onclick="filt('ress')"><span class="d" style="background:var(--ress)"></span>Tagueado c/ ressalva</button>
+    <button class="fbtn" data-f="gap" onclick="filt('gap')"><span class="d" style="background:var(--gap)"></span>Gap real</button>
+    <button class="fbtn" data-f="P1" onclick="filt('P1')">P1 · os 70%</button>
+  </div>
+
+  <div id="map"></div>
+
+  <footer>
+    <span>Status: <b style="color:var(--ok)">confiável</b> · <b style="color:var(--ress)">tagueado c/ ressalva</b> · <b style="color:var(--gap)">gap real</b> — avaliação a validar com TI/BI</span>
+    <span>v2 · escopo onboarding · reconciliado com eventos do app · rascunho para revalidação</span>
+  </footer>
+</div>
+
+<script>
+const LANE={1:{k:'canal',n:'Canal de venda'},2:{k:'app',n:'App Brisa Cliente'},3:{k:'bko',n:'Backoffice'},4:{k:'agenda',n:'Agendamento'}};
+const PH=[
+ {n:1,t:'Orçamento e aquisição',breaks:[
+  {tag:'bloqueio',blk:1,name:'Débito pendente',pri:'P3',st:'ress',tags:[],
+   act:'Consolidar taxa de bloqueio por débito. Motivo já é registrado na criação; falta o indicador agregado.',src:'Revan'},
+  {tag:'bloqueio',blk:1,name:'Barrado no antifraude',pri:'P2',st:'gap',tags:[],
+   act:'Criar evento de resultado do antifraude com motivo e faixa de score, por canal.',src:'Revan + motor de score'},
+  {tag:'abandono 1',name:'Não iniciou formalização',pri:'P0',st:'gap',tags:['Quero Contratar (contador existente)'],
+   act:'"Quero Contratar" dá o início no app. Falta a entrada de fato: cruzar login same-day (Revan) × ID do orçamento — download não é rastreável.',src:'Revan × ID do orçamento'},
+ ]},
+ {n:2,t:'Formalização no aplicativo',breaks:[
+  {tag:'abandono 2',name:'Etiqueta não assinada',pri:'P2',st:'ress',
+   tags:['but_onb_etiq_padrao_conf_sim','but_onb_etiq_padrao_conf_nao','but_onb_etiq_padrao_assin_sucesso','but_onb_etiq_padrao_assin_erro'],
+   act:'Ressalva 3: os eventos de etiqueta e contrato parecem distintos (etiq × contrato). Validar que a tela dinâmica não mistura os contadores dentro do onboarding.',src:'App Brisa Cliente'},
+  {tag:'abandono 3',name:'Abandona o gate biométrico',pri:'P2',st:'ress',
+   tags:['but_onb_bio_conf_selfie_sim','but_onb_bio_conf_selfie_nao'],
+   act:'Modal é contável (cliques + usuários). Ressalva 1: o início da captura pela SDK é cego — medir o gate, mas não confundir com início efetivo.',src:'App Brisa Cliente'},
+  {tag:'abandono 4',name:'Selfie reprovada',pri:'P1',st:'ress',
+   tags:['but_onb_bio_conf_selfie_sim','but_onb_bio_conf_selfie_nao'],
+   act:'Ressalva 2: o tag mede preferência (aceitar/refazer), não falha sistêmica. O sinal de reprovação + motivo tem que vir da validação do Único, por tentativa.',src:'Único (validação)'},
+  {tag:'abandono 5',name:'Documento reprovado',pri:'P1',st:'gap',
+   tags:['Quebra sinalizada: envio da frente do doc'],
+   act:'Quebra já apontada no envio da frente do documento. Investigar a causa e capturar o resultado sistêmico do Único (frente/verso) por tentativa — não a revisão de foto.',src:'Único (validação)'},
+  {tag:'abandono 6',name:'Falha na assinatura do contrato',pri:'P1',st:'ress',
+   tags:['but_onb_contrato_conf_sim','but_onb_contrato_conf_nao','but_onb_contrato_assin_sucesso','but_onb_contrato_assin_erro','but_onb_contrato_ir_final','but_onb_contrato_cancel_final'],
+   act:'Conjunto mais completo. Ressalva 3: confirmar que os eventos de contrato não se misturam com os de etiqueta na tela dinâmica. Troca de plano está fora do escopo deste tracking.',src:'D4Sign'},
+ ]},
+ {n:3,t:'Auditoria e disponibilidade',breaks:[
+  {tag:'abandono 7',name:'Reprovado na auditoria',pri:'P2',st:'ress',tags:[],
+   act:'Consolidar taxa de aprovação, motivos e lead time de auditoria.',src:'Backoffice / Revan'},
+  {tag:'abandono 8',name:'Indisponível',pri:'P2',st:'gap',tags:[],
+   act:'Criar evento de viabilidade por motivo + flag auto/manual. Peso de "coordenada" liga ao projeto de captura automática (obs.: só captura coordenada, não altera endereço).',src:'BrisaAgenda + Maps API'},
+ ]},
+ {n:4,t:'Agendamento e instalação',breaks:[
+  {tag:'abandono 9',name:'Contato de confirmação sem sucesso',pri:'P3',st:'gap',tags:[],
+   act:'Criar evento de tentativa/resultado de contato, amarrado ao orçamento.',src:'Genesys / OLOS'},
+  {tag:'abandono 10',name:'Instalação não realizada',pri:'P3',st:'ress',tags:[],
+   act:'Improdutivas já acompanhadas no War Room. Detalhar motivo e amarrar ao funil ponta a ponta.',src:'BrisaAgenda / campo'},
+ ]},
+];
+
+const map=document.getElementById('map');
+PH.forEach(p=>{
+ const lane=LANE[p.n];
+ const cards=p.breaks.map(b=>{
+  const cls=b.st==='gap'?'':(b.st==='ress'?'ress':'ok');
+  const blk=b.blk?'blk':'';
+  const stlabel=b.st==='gap'?'gap real':(b.st==='ress'?'tagueado c/ ressalva':'confiável');
+  const tagsHtml=b.tags&&b.tags.length?b.tags.map(t=>`<code>${t}</code>`).join(''):'<span class="none">nenhum evento ainda</span>';
+  return `<div class="tc ${cls} ${blk}" data-pri="${b.pri}" data-st="${b.st}">
+    <div class="th"><span class="tag">${b.tag}</span><span class="name">${b.name}</span>
+      <span class="badges"><span class="pri ${b.pri}">${b.pri}</span><span class="stt ${b.st}">${stlabel}</span></span></div>
+    <div class="field"><div class="fl">Eventos já existentes</div><div class="tags">${tagsHtml}</div></div>
+    <div class="field act"><div class="fl">Ressalva → ação</div><div class="fv">${b.act}</div></div>
+    <div class="field"><div class="fl">Fonte confiável do sinal</div><span class="src">${b.src}</span></div>
+  </div>`;
+ }).join('');
+ map.innerHTML+=`<div class="phase" data-phase="${p.n}"><h2><span class="pn">FASE ${p.n}</span>${p.t}<span class="lane" style="background:var(--${lane.k})">${lane.n}</span></h2><div class="cards">${cards}</div></div>`;
+});
+function filt(f){
+ document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
+ document.querySelectorAll('.tc').forEach(c=>{
+  const show=f==='all'||(f==='P1'?c.dataset.pri==='P1':c.dataset.st===f);
+  c.classList.toggle('hidden',!show);
+ });
+ document.querySelectorAll('.phase').forEach(ph=>{
+  const any=[...ph.querySelectorAll('.tc')].some(c=>!c.classList.contains('hidden'));
+  ph.classList.toggle('hidden',!any);
+ });
+}
+</script>
+</body>
+</html>
