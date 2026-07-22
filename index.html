@@ -135,6 +135,33 @@
   .auto-callout .ic{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--ok);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
   .auto-callout p{font-size:14px;color:#0d6b40}
   .auto-callout b{color:#095e37}
+  .aud-diagram{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:22px}
+  .aud-row{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;justify-content:center}
+  .aud-steps{margin-bottom:8px}
+  .aud-step{flex:1;min-width:130px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center}
+  .as-n{width:20px;height:20px;border-radius:50%;background:var(--app);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;margin:0 auto 6px}
+  .as-t{font-size:12.5px;font-weight:600;color:var(--ink)}
+  .as-d{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .aud-arrow{align-self:center;color:var(--muted);font-size:14px;flex:0 0 auto}
+  .aud-mid{text-align:center;font-size:11.5px;color:var(--muted);font-weight:600;margin:6px 0}
+  .aud-down{text-align:center;color:var(--muted);font-size:16px;margin:2px 0}
+  .aud-down.small{font-size:13px;margin:6px 0}
+  .aud-parallel{gap:10px;margin:4px 0}
+  .aud-box{flex:1;min-width:170px;border-radius:10px;padding:12px 14px;border:1px solid var(--line)}
+  .aud-purple{background:#f5f3ff;border-color:#ded7ff}
+  .ab-tag{font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--bko);font-weight:700;margin-bottom:4px}
+  .ab-h{font-size:13px;font-weight:600;color:var(--ink)}
+  .ab-d{font-size:11px;color:var(--muted);margin-top:2px}
+  .aud-plus{align-self:center;color:var(--muted);font-size:14px}
+  .aud-decision{display:table;margin:6px auto;text-align:center;font-size:12.5px;font-weight:700;color:var(--ress);background:var(--ress-soft);padding:6px 14px;border-radius:8px}
+  .aud-branches{display:flex;gap:14px;margin-top:6px;flex-wrap:wrap}
+  .aud-branch{flex:1;min-width:200px;text-align:center}
+  .ab-lbl{font-size:10.5px;font-weight:700;color:var(--muted);margin-bottom:6px}
+  .aud-fail{background:var(--gap-soft);border-color:#f4c9c7;margin-bottom:6px}
+  .aud-fail .ab-h{color:var(--gap)}
+  .aud-ok{background:var(--ok-soft);border-color:#bfe5cd;margin-bottom:6px}
+  .aud-ok .ab-h{color:#0d6b40}
+  .aud-note{font-size:11.5px;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
   .pend-tbl{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px}
   .pend-tbl th{background:var(--ink);color:#fff;text-align:left;padding:9px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
   .pend-tbl th.num,.pend-tbl td.num{text-align:center;width:90px}
@@ -238,6 +265,9 @@
           <li>Apoio na finalização do app (assinatura, fotos, validações)</li>
           <li>Contato com o cliente para confirmar informações</li>
           <li>Cancelamento de orçamentos (conforme regra da UGE)</li>
+          <li>Correção de vendas encaminhadas pela auditoria antifraude</li>
+          <li>Retomada de processos do app parados por abandono do cliente</li>
+          <li>Débitos financeiros na base (cobrança)</li>
         </ul>
       </div>
       <div class="bm">
@@ -255,6 +285,44 @@
       </div>
     </div>
 
+    <div class="sechd">Auditoria — modelo apresentado (formalização → antifraude → BKO)</div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Do material já apresentado à liderança — como formalização, auditoria antifraude e BKO comercial se conectam.</p>
+    <div class="aud-diagram">
+      <div class="aud-row aud-steps">
+        <div class="aud-step"><div class="as-n">1</div><div class="as-t">Checklist</div><div class="as-d">Etiqueta, fotos, endereço e contratos</div></div>
+        <div class="aud-arrow">→</div>
+        <div class="aud-step"><div class="as-n">2</div><div class="as-t">Biometria</div><div class="as-d">Selfie e prova de vida</div></div>
+        <div class="aud-arrow">→</div>
+        <div class="aud-step"><div class="as-n">3</div><div class="as-t">Documento</div><div class="as-d">Frente e verso</div></div>
+        <div class="aud-arrow">→</div>
+        <div class="aud-step"><div class="as-n">4</div><div class="as-t">Contratos</div><div class="as-d">Assinaturas concluídas</div></div>
+      </div>
+      <div class="aud-mid">Formalização concluída → enviada para auditoria</div>
+      <div class="aud-down">↓</div>
+      <div class="aud-row aud-parallel">
+        <div class="aud-box aud-purple"><div class="ab-tag">Validação documental</div><div class="ab-h">Auditoria antifraude</div><div class="ab-d">Automática ou manual · fotos e contrato assinado</div></div>
+        <div class="aud-plus">+</div>
+        <div class="aud-box aud-purple"><div class="ab-tag">Tratativa de pendências</div><div class="ab-h">BKO Comercial</div><div class="ab-d">Atua quando há dados ou documentos pendentes</div></div>
+      </div>
+      <div class="aud-down">↓</div>
+      <div class="aud-decision">Auditoria aprovada?</div>
+      <div class="aud-branches">
+        <div class="aud-branch">
+          <div class="ab-lbl">NÃO</div>
+          <div class="aud-box aud-fail"><div class="ab-h">Reprovar e registrar o motivo</div></div>
+          <div class="aud-down small">↓</div>
+          <div class="aud-box aud-fail"><div class="ab-h">Retorno ao cliente e nova tratativa</div></div>
+        </div>
+        <div class="aud-branch">
+          <div class="ab-lbl">SIM</div>
+          <div class="aud-box aud-ok"><div class="ab-h">Validar viabilidade técnica</div><div class="ab-d">Endereço · coordenadas · cobertura · porta e rota</div></div>
+          <div class="aud-down small">↓</div>
+          <div class="aud-box aud-ok"><div class="ab-h">Liberar agendamento</div></div>
+        </div>
+      </div>
+      <div class="aud-note">A antifraude (automática ou manual) exige envio de fotos e assinatura de contrato. O BKO Comercial atua caso esses dados estejam pendentes.</div>
+    </div>
+
     <div class="auto-callout">
       <div class="ic">✓</div>
       <p><b>Nota sobre a auditoria (Fibra):</b> ~90% dos casos tem validação automática — não exige ação do vendedor. Só o FWA passa 100% por auditoria manual (SLA de 15 min). Regra pro vendedor: aguardar o SLA, não acionar suporte, não reenviar a venda. Só agir se o SLA expirar ou houver sinalização de risco/inconsistência.</p>
@@ -267,7 +335,7 @@
 
   <footer>
     <span>Status: <b style="color:var(--ok)">confiável</b> · <b style="color:var(--ress)">tagueado c/ ressalva</b> · <b style="color:var(--gap)">gap real</b> — avaliação a validar com TI/BI</span>
-    <span>v2.6 · card do tracking redesenhado · entrante/efetivado por motivo individual</span>
+    <span>v2.7 · diagrama oficial da auditoria · viabilidade técnica unificada · +4 casos de report do BKO</span>
   </footer>
 </div>
 
@@ -308,19 +376,17 @@ const PH=[
  ]},
  {n:3,t:'Auditoria e disponibilidade',breaks:[
   {tag:'abandono 7',name:'Reprovado na auditoria',pri:'P2',st:'gap',tags:[],
-   act:'Manual do Vendedor confirma: ~90% da auditoria de Fibra é automática (sem ação do vendedor); só FWA é 100% manual (SLA 15min). Vendedor só age se SLA expirar ou houver sinalização de risco. Falta o indicador agregado — o processo é conhecido, o volume/motivo por caso não.',src:'Antifraude / BKO (via Revan)',
+   act:'Manual do Vendedor confirma: ~90% da auditoria de Fibra é automática; só FWA é 100% manual (SLA 15min). Modelo oficial (apresentado ao Jair) inclui "reprovar e registrar o motivo" como etapa do processo — ou seja, o design prevê captura de motivo. Hoje esse dado não chega até o produto: falta confirmar se é falta de exposição (existe, não é compartilhado) ou o passo não está implementado.',src:'Antifraude / BKO (via Revan)',
    motivos:[{n:'SLA expirado (parada além do prazo)',vol:35},{n:'Suspeita de risco / fraude',vol:25},{n:'Duplicidade cadastral',vol:22},{n:'Dados incorretos ou incompletos',vol:18}]},
-  {tag:'abandono 8a',name:'Disponibilidade — sem viabilidade',pri:'P2',st:'gap',tags:[],
-   act:'Correção: a verificação de disponibilidade da fibra não tem tracking. Criar evento de resultado por motivo (cobertura, porta, coordenada) + flag auto/manual. "Coordenada" liga ao projeto de captura automática.',src:'BrisaAgenda + Maps API',
-   motivos:[{n:'Sem cobertura na região',vol:35},{n:'Porta indisponível',vol:30},{n:'Coordenada incorreta/imprecisa',vol:25},{n:'Outro',vol:10}]},
-  {tag:'abandono 8b',add:'nova',name:'Rota não confirmada',pri:'P2',st:'gap',tags:[],
-   act:'Nova (fibra): a confirmação de rota é uma etapa separada da disponibilidade e também está sem tracking — hoje totalmente invisível. Criar evento de resultado da confirmação de rota.',src:'BrisaAgenda'},
+  {tag:'abandono 8',name:'Viabilidade técnica — sem disponibilidade',pri:'P2',st:'gap',tags:[],
+   act:'Modelo oficial trata como uma checagem única — "validar viabilidade técnica" — combinando endereço, coordenadas, cobertura, porta e rota, não duas etapas separadas como eu tinha desenhado antes. Ajustado. Sem tracking hoje. Criar evento único de resultado + motivo. "Coordenada" liga ao projeto de captura automática.',src:'BrisaAgenda + Maps API',
+   motivos:[{n:'Sem cobertura na região',vol:30},{n:'Porta indisponível',vol:22},{n:'Coordenada incorreta/imprecisa',vol:20},{n:'Rota inviável',vol:20},{n:'Outro',vol:8}]},
  ]},
  {n:4,t:'Agendamento e instalação',breaks:[
   {tag:'abandono 9-pre',add:'candidata',name:'Agendamento não concluído',pri:'P3',st:'gap',tags:[],
    act:'Nova: a decisão "agendamento concluído?" não tinha quebra no fluxo original. Cliente vê os horários mas pode não confirmar. Verificar se há evento; provável gap.',src:'BrisaAgenda'},
   {tag:'abandono 9b',add:'nova',name:'Rota indisponível (agendamento)',pri:'P3',st:'gap',tags:[],
-   act:'Nova (Manual do Vendedor): "Rota indisponível" reaparece como caso do Backoffice Mapas na fase de agendamento — distinto da confirmação técnica de rota da Fase 3 (abandono 8b, Redes FTTH). Pode ser rota que estava ok na efetivação e virou indisponível depois, ou uma segunda checagem. Validar se é o mesmo evento ou um estado novo.',src:'Backoffice Mapas'},
+   act:'Nova (Manual do Vendedor): "Rota indisponível" reaparece como caso do Backoffice Mapas na fase de agendamento — distinto da checagem de viabilidade técnica da Fase 3 (abandono 8, que já inclui rota). Pode ser rota que estava ok na efetivação e virou indisponível depois, ou uma segunda checagem. Validar se é o mesmo evento ou um estado novo.',src:'Backoffice Mapas'},
   {tag:'abandono 9',name:'Contato de confirmação sem sucesso',pri:'P3',st:'gap',tags:[],
    act:'Criar evento de tentativa/resultado de contato, amarrado ao orçamento.',src:'Genesys / OLOS'},
   {tag:'abandono 10a',name:'Improdutiva',pri:'P3',st:'ress',tags:['Base do time de IAT'],
@@ -357,6 +423,7 @@ const MOT=[
  ]},
  {grp:'Comercial / financeiro', items:[
    {n:'CLIENTE COM DÉBITO', entrantes:70, efetivados:45},
+   {n:'DÉBITOS NA BASE (cobrança)', entrantes:55, efetivados:30},
    {n:'PLANO DIVERGENTE (VEND.)', entrantes:40, efetivados:25},
    {n:'DESCONTO DE INSTALAÇÃO', entrantes:25, efetivados:15},
    {n:'CANCELAMENTO ORÇA/FILA', entrantes:30, efetivados:18},
@@ -458,9 +525,8 @@ const F=[
  {name:'Contrato assinado', vol:440, ph:2, leak:{n:'abandono 6', t:'Assinatura do contrato'}},
  {name:'Auditoria aprovada', vol:415, ph:3, leak:{n:'abandono 7', t:'Reprovado / parado na auditoria'},
   motivos:[{n:'SLA expirado (parada além do prazo)',vol:35},{n:'Suspeita de risco / fraude',vol:25},{n:'Duplicidade cadastral',vol:22},{n:'Dados incorretos ou incompletos',vol:18}]},
- {name:'Disponibilidade confirmada', vol:385, ph:3, leak:{n:'abandono 8a', t:'Sem viabilidade'},
-  motivos:[{n:'Sem cobertura na região',vol:35},{n:'Porta indisponível',vol:30},{n:'Coordenada incorreta/imprecisa',vol:25},{n:'Outro',vol:10}]},
- {name:'Rota confirmada (efetivação)', vol:365, ph:3, leak:{n:'abandono 8b', t:'Rota — Redes FTTH'}},
+ {name:'Viabilidade técnica confirmada', vol:365, ph:3, leak:{n:'abandono 8', t:'Sem viabilidade técnica'},
+  motivos:[{n:'Sem cobertura na região',vol:30},{n:'Porta indisponível',vol:22},{n:'Coordenada incorreta/imprecisa',vol:20},{n:'Rota inviável',vol:20},{n:'Outro',vol:8}]},
  {name:'Agendamento confirmado', vol:345, ph:4, leak:{n:'abandono 9-pre/9', t:'Não concluído / contato sem sucesso'}},
  {name:'Rota ainda disponível (agendamento)', vol:330, ph:4, leak:{n:'abandono 9b', t:'Rota indisponível — BKO Mapas'}},
  {name:'Instalação sem improdutiva', vol:305, ph:4, leak:{n:'abandono 10a', t:'Improdutiva'},
