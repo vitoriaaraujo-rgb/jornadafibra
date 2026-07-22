@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mapa de Tagueamento v2 — Jornada da Fibra · Brisanet</title>
+<title>Tracking v2 — Jornada da Fibra · Brisanet</title>
 <style>
   :root{
     --ink:#1c1c1e;--ink-2:#3a3a3e;--muted:#7a7a82;--line:#e6e4e0;
@@ -27,58 +27,72 @@
   .thesis p{font-size:14.5px;color:#7a3410}
   .thesis b{color:#b53a00}
 
-  .sechd{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800;margin:30px 0 12px}
+  .sechd{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin:30px 0 12px}
 
   .caveats{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
   .cv{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:15px 16px;border-top:3px solid var(--ress)}
-  .cv .cn{display:flex;align-items:center;gap:8px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ress);font-weight:800;margin-bottom:7px}
+  .cv .cn{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ress);font-weight:700;margin-bottom:7px}
   .cv .cn .num{background:var(--ress);color:#fff;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px}
-  .cv .ch{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .cv .ch{font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:4px}
   .cv p{font-size:12.5px;color:var(--ink-2)}
-  .cv .aff{margin-top:8px;font-size:11px;color:var(--gap);font-weight:700}
+  .cv .aff{margin-top:8px;font-size:11px;color:var(--gap);font-weight:600}
 
   .found{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
   .fc{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 15px;border-top:3px solid var(--ok)}
-  .fc .ft{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ok);font-weight:800;margin-bottom:5px}
-  .fc .fh{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+  .fc .ft{font-size:11px;color:var(--ok);font-weight:700;margin-bottom:5px}
+  .fc .fh{font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:3px}
   .fc p{font-size:12.5px;color:var(--ink-2)}
 
-  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:30px 0 4px;position:sticky;top:0;z-index:20;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line)}
-  .controls .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-right:2px}
-  .fbtn{border:1px solid var(--line);background:var(--white);color:var(--ink-2);padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .14s}
+  .controls{display:flex;gap:8px;align-items:center;margin:30px 0 4px;position:sticky;top:0;z-index:20;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .controls::-webkit-scrollbar{display:none}
+  .controls .lbl{font-size:11px;color:var(--muted);font-weight:600;margin-right:2px;flex:0 0 auto}
+  .fbtn{flex:0 0 auto;border:1px solid var(--line);background:var(--white);color:var(--ink-2);padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .14s;white-space:nowrap}
   .fbtn:hover{border-color:#d3d0cb}
   .fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
   .fbtn .d{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
   .phase{margin-top:24px}
-  .phase h2{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-  .phase h2 .pn{background:var(--ink);color:#fff;font-size:12px;padding:3px 9px;border-radius:7px}
-  .phase h2 .lane{font-size:10.5px;font-weight:800;text-transform:uppercase;color:#fff;padding:3px 8px;border-radius:6px}
+  .phase h2{font-size:14.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .phase h2 .pn{background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.02em}
+  .phase h2 .lane{font-size:10px;font-weight:700;text-transform:none;color:#fff;padding:3px 8px;border-radius:6px}
 
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-  .tc{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 15px;border-left:4px solid var(--gap)}
-  .tc.ress{border-left-color:var(--ress)} .tc.ok{border-left-color:var(--ok)}
-  .tc .th{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px}
-  .tc .tag{flex:0 0 auto;background:var(--gap);color:#fff;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;white-space:nowrap}
-  .tc.ress .tag{background:var(--ress)} .tc.ok .tag{background:var(--ok)} .tc.blk .tag{background:var(--bko)}
-  .tc .name{font-size:14.5px;font-weight:700;color:var(--ink);flex:1;line-height:1.3}
-  .badges{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
-  .pri{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px;color:#fff}
-  .pri.P0{background:var(--p0)} .pri.P1{background:var(--p1)} .pri.P2{background:var(--p2)} .pri.P3{background:var(--p3)}
-  .stt{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+  .tc{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--gap);border-radius:12px;padding:14px 15px}
+  .tc.ress{border-top-color:var(--ress)} .tc.ok{border-top-color:var(--ok)}
+  .tc-meta{display:flex;align-items:center;gap:7px;margin-bottom:6px;flex-wrap:wrap}
+  .tc-tagtxt{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .tc.blk .tc-tagtxt{color:var(--bko)}
+  .tc .th{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:9px;flex-wrap:wrap}
+  .tc .name{font-size:14px;font-weight:600;color:var(--ink);flex:1;line-height:1.35;min-width:160px}
+  .badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pri{font-size:11px;font-weight:700}
+  .pri.P0{color:var(--p0)} .pri.P1{color:var(--p1)} .pri.P2{color:var(--p2)} .pri.P3{color:var(--p3)}
+  .stt{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:5px}
   .stt.gap{background:var(--gap-soft);color:var(--gap)} .stt.ress{background:var(--ress-soft);color:var(--ress)} .stt.ok{background:var(--ok-soft);color:var(--ok)}
-  .addb{font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.03em}
+  .addb{font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:5px}
   .addb.nova{background:#e6f0ff;color:#2f5fd0}
   .addb.candidata{background:#f3edff;color:#7a3fd0}
-  .tc.add-candidata{border-left-style:dashed}
+  .tc.add-candidata{border-top-style:dashed}
+  .toggle-mot{display:inline-flex;align-items:center;gap:5px;margin-top:9px;background:none;border:1px solid var(--line);color:var(--ink-2);font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:7px;cursor:pointer;font-family:inherit}
+  .toggle-mot:hover{border-color:#d3d0cb}
+  .toggle-mot .cv-arrow{transition:transform .15s ease;font-size:9px}
+  .toggle-mot.open .cv-arrow{transform:rotate(90deg)}
+  .motpanel{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .motpanel.open{display:block}
+  .motpanel .mp-note{font-size:10.5px;color:var(--ress);font-weight:600;margin-bottom:7px}
+  .mp-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .mp-row .mn{flex:1;font-size:12.5px;color:var(--ink-2)}
+  .mp-row input{width:56px;border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:12px;font-weight:600;text-align:right;font-family:inherit;background:var(--paper);color:var(--ink)}
+  .mp-row .mp-pct{width:38px;text-align:right;font-size:11.5px;color:var(--muted);font-weight:600}
+  .mp-bar{height:5px;border-radius:3px;background:var(--gap);margin-top:2px}
   .field{margin-top:9px}
-  .field .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;margin-bottom:3px}
+  .field .fl{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:2px}
   .field .fv{font-size:12.8px;color:var(--ink-2)}
   .tags{display:flex;flex-wrap:wrap;gap:4px}
   .tags code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;background:#f1f4ff;border:1px solid #dfe4fb;color:#3a45a8;padding:2px 7px;border-radius:5px}
-  .tags .none{font-size:12px;color:var(--gap);font-weight:700}
-  .field.act .fl{color:var(--brand)} .field.act .fv{color:var(--ink);font-weight:500}
-  .src{display:inline-block;font-size:11.5px;font-weight:700;color:var(--ink);background:#f2f0ec;padding:2px 8px;border-radius:5px}
+  .tags .none{font-size:12px;color:var(--gap);font-weight:600}
+  .field.act .fl{color:var(--muted)} .field.act .fv{color:var(--ink);font-weight:400}
+  .src{display:inline-block;font-size:11.5px;font-weight:600;color:var(--ink);background:#f2f0ec;padding:2px 8px;border-radius:5px}
   footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   .viewtabs{display:flex;gap:6px;margin:22px 0 2px}
   .vtab{border:1px solid var(--line);background:var(--white);color:var(--ink-2);padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
@@ -100,7 +114,34 @@
   .fn-bar .rt{display:flex;align-items:center;gap:8px;flex:0 0 auto}
   .fn-bar input{width:62px;border:none;border-radius:6px;padding:4px 7px;font-size:12.5px;font-weight:800;text-align:right;font-family:inherit;background:rgba(255,255,255,.92);color:var(--ink)}
   .fn-pct{font-size:12px;opacity:.92;min-width:36px;text-align:right;font-weight:700}
+  .fn-track .toggle-mot{margin:2px 0 10px}
+  .fn-track .motpanel{text-align:left;max-width:340px;margin:0 auto 14px;border-top:none;padding-top:0}
+  .fm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .fm-card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 15px;border-left:4px solid var(--gap)}
+  .fm-h{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:8px}
+  .fm-tag{font-size:10px;font-weight:600;background:var(--gap-soft);color:var(--gap);padding:3px 7px;border-radius:5px;white-space:nowrap}
+  .fm-note{font-size:10.5px;color:var(--ress);font-weight:700;margin-bottom:8px}
   .hidden{display:none!important}
+  .bko-moments{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .bm{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px 19px}
+  .bm .bm-ph{display:inline-block;font-size:10.5px;font-weight:600;color:#fff;padding:3px 9px;border-radius:6px;margin-bottom:9px}
+  .bm .bm-h{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:3px}
+  .bm .bm-s{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .bm ul{list-style:none;margin-bottom:12px}
+  .bm li{font-size:13px;color:var(--ink-2);padding:5px 0 5px 16px;position:relative;border-bottom:1px solid #f2f0ec}
+  .bm li:last-child{border-bottom:none}
+  .bm li::before{content:"";position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--bko)}
+  .auto-callout{background:var(--ok-soft);border:1px solid #bfe5cd;border-left:4px solid var(--ok);border-radius:12px;padding:16px 18px;margin:22px 0;display:flex;gap:14px}
+  .auto-callout .ic{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--ok);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
+  .auto-callout p{font-size:14px;color:#0d6b40}
+  .auto-callout b{color:#095e37}
+  .pend-tbl{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px}
+  .pend-tbl th{background:var(--ink);color:#fff;text-align:left;padding:9px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+  .pend-tbl th.num,.pend-tbl td.num{text-align:center;width:90px}
+  .pend-tbl td{padding:8px 12px;border-top:1px solid var(--line);color:var(--ink-2);vertical-align:middle}
+  .pend-tbl tr.grp td{background:var(--paper);font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:7px 12px}
+  .pend-tbl input{width:64px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12.5px;font-weight:600;text-align:center;font-family:inherit;background:var(--paper);color:var(--ink)}
+  .pend-tbl .rate{font-weight:700;color:var(--ok)}
   @media print{.controls{display:none}body{background:#fff}header::after{display:none}.tc,.cv{break-inside:avoid}}
 </style>
 </head>
@@ -116,8 +157,9 @@
 <div class="wrap">
 
   <div class="viewtabs">
-    <button class="vtab on" id="vt-map" onclick="setView('map')">Mapa de tagueamento</button>
+    <button class="vtab on" id="vt-map" onclick="setView('map')">Tracking</button>
     <button class="vtab" id="vt-funnel" onclick="setView('funnel')">Funil de conversão</button>
+    <button class="vtab" id="vt-bko" onclick="setView('bko')">Backoffice comercial</button>
   </div>
 
   <div id="view-map">
@@ -126,7 +168,7 @@
     <p><b>Reframe:</b> a formalização já tem eventos (<b>etiqueta, selfie e contrato</b> estão tagueados). Mas três armadilhas estruturais fazem o dado existente medir a coisa errada. Antes de criar indicador novo, é preciso <b>tornar confiável o que já é coletado</b>.</p>
   </div>
 
-  <div class="sechd">As 3 ressalvas estruturais — o foco da fase</div>
+  <div class="sechd">As 4 ressalvas estruturais — o foco da fase</div>
   <div class="caveats">
     <div class="cv">
       <div class="cn"><span class="num">1</span>Captura pelo SDK</div>
@@ -145,6 +187,12 @@
       <div class="ch">Etiqueta e contrato podem se misturar</div>
       <p>A mesma tela renderiza a etiqueta e os contratos de onboarding. Os eventos de botão são distintos (etiq × contrato), mas contadores genéricos de página não separam qual assinatura ocorreu.</p>
       <div class="aff">Afeta: abandono 2 e abandono 6 · escopo só onboarding</div>
+    </div>
+    <div class="cv">
+      <div class="cn"><span class="num">4</span>Retorno ao Revan</div>
+      <div class="ch">Fotos e contrato dependem do callback</div>
+      <p>Biometria/documentos (Único) e assinatura (D4Sign) rodam como serviços embedados no app. Ambos precisam devolver a confirmação ao Revan — é o CRM central, usado tanto pelo antifraude quanto pelo BKO comercial na auditoria. Sem esse retorno, o BKO fica cego mesmo que o cliente tenha concluído a etapa.</p>
+      <div class="aff">Afeta: abandono 4, 5 e 6 · risco de limbo silencioso</div>
     </div>
   </div>
 
@@ -172,11 +220,54 @@
     <div class="fn-banner"><b>Números ilustrativos</b> (exemplo da reunião + estimativa). Edite cada etapa e substitua pelos valores reais conforme instrumentar — a conversão e as quedas recalculam sozinhas.</div>
     <div class="fn-summary" id="fnSum"></div>
     <div class="fn-track" id="funnel"></div>
+
+    <div class="sechd">Motivos das quedas com categoria conhecida</div>
+    <div class="fm-grid" id="funnelMotivos"></div>
+  </div>
+
+  <div id="view-bko" class="hidden">
+    <div class="sechd">Os dois momentos de atuação</div>
+    <div class="bko-moments">
+      <div class="bm">
+        <span class="bm-ph" style="background:var(--app)">Fase 2-3 · Formalização / Auditoria</span>
+        <div class="bm-h">Backoffice Correção</div>
+        <div class="bm-s">Atua enquanto a venda ainda está sendo formalizada ou auditada</div>
+        <ul>
+          <li>Conferência de dados cadastrais</li>
+          <li>Validação de endereço e cobertura</li>
+          <li>Apoio na finalização do app (assinatura, fotos, validações)</li>
+          <li>Contato com o cliente para confirmar informações</li>
+          <li>Cancelamento de orçamentos (conforme regra da UGE)</li>
+        </ul>
+      </div>
+      <div class="bm">
+        <span class="bm-ph" style="background:var(--agenda)">Fase 4 · Agendamento</span>
+        <div class="bm-h">Backoffice Mapas</div>
+        <div class="bm-s">Atua depois que a venda já foi efetivada, na organização da execução</div>
+        <ul>
+          <li>Cancelamento de venda</li>
+          <li>Solicitação de dados</li>
+          <li>Renegociação de venda</li>
+          <li>Problema técnico de logística</li>
+          <li>Negociação de caixa</li>
+          <li>Rota indisponível</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="auto-callout">
+      <div class="ic">✓</div>
+      <p><b>Nota sobre a auditoria (Fibra):</b> ~90% dos casos tem validação automática — não exige ação do vendedor. Só o FWA passa 100% por auditoria manual (SLA de 15 min). Regra pro vendedor: aguardar o SLA, não acionar suporte, não reenviar a venda. Só agir se o SLA expirar ou houver sinalização de risco/inconsistência.</p>
+    </div>
+
+    <div class="sechd">Motivos reais de pendência (lista do sistema)</div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:2px">Extraído diretamente do dropdown de motivos usado quando uma venda é direcionada ao BKO — dado real, não estimativa. Entrantes e efetivados são ilustrativos por motivo — edite ao ter o volume real.</p>
+    <table class="pend-tbl" id="pgTable"></table>
   </div>
 
   <footer>
     <span>Status: <b style="color:var(--ok)">confiável</b> · <b style="color:var(--ress)">tagueado c/ ressalva</b> · <b style="color:var(--gap)">gap real</b> — avaliação a validar com TI/BI</span>
-    <span>v2.1 · revisado (IAT, auditoria sem motivo, rota da fibra) · escopo onboarding · rascunho para revalidação</span>
+    <span>v2.6 · card do tracking redesenhado · entrante/efetivado por motivo individual</span>
   </footer>
 </div>
 
@@ -185,9 +276,10 @@ const LANE={1:{k:'canal',n:'Canal de venda'},2:{k:'app',n:'App Brisa Cliente'},3
 const PH=[
  {n:1,t:'Orçamento e aquisição',breaks:[
   {tag:'bloqueio',blk:1,name:'Débito pendente',pri:'P3',st:'ress',tags:[],
-   act:'Consolidar taxa de bloqueio por débito. Motivo já é registrado na criação; falta o indicador agregado.',src:'Revan'},
+   act:'Consolidar taxa de bloqueio por débito. Motivo já é registrado na criação; falta o indicador agregado. Critério real (Manual do Vendedor): aprovação ágil exige Perfil de Aging (atraso >5 anos + dívida <R$1.000) ou Perfil de Débito (só taxas/multas) ou Bom Pagador (10+ faturas quitadas). Fora disso, cobrança negocia manualmente.',src:'Revan'},
   {tag:'bloqueio',blk:1,name:'Barrado no antifraude',pri:'P2',st:'gap',tags:[],
-   act:'Criar evento de resultado do antifraude com motivo e faixa de score, por canal.',src:'Revan + motor de score'},
+   act:'Criar evento de resultado do antifraude com motivo e faixa de score, por canal. Antifraude roda sobre o Revan (CRM central).',src:'Revan (motor de score/antifraude)',
+   motivos:[{n:'Score abaixo do mínimo',vol:40},{n:'CPF em lista restritiva',vol:25},{n:'Divergência cadastral',vol:20},{n:'Duplicidade de CPF/conta',vol:10},{n:'Outro',vol:5}]},
   {tag:'abandono 1',name:'Não iniciou formalização',pri:'P0',st:'gap',tags:['Quero Contratar (contador existente)'],
    act:'"Quero Contratar" dá o início no app. Falta a entrada de fato: cruzar login same-day (Revan) × ID do orçamento — download não é rastreável.',src:'Revan × ID do orçamento'},
  ]},
@@ -200,52 +292,147 @@ const PH=[
    act:'Modal é contável (cliques + usuários). Ressalva 1: o início da captura pela SDK é cego — medir o gate, mas não confundir com início efetivo.',src:'App Brisa Cliente'},
   {tag:'abandono 4',name:'Selfie reprovada',pri:'P1',st:'ress',
    tags:['but_onb_bio_conf_selfie_sim','but_onb_bio_conf_selfie_nao'],
-   act:'Ressalva 2: o tag mede preferência (aceitar/refazer), não falha sistêmica. O sinal de reprovação + motivo tem que vir da validação do Único, por tentativa.',src:'Único (validação)'},
+   act:'Ressalva 2: o tag mede preferência (aceitar/refazer), não falha sistêmica. O sinal de reprovação + motivo tem que vir da validação do Único, por tentativa. Ressalva 4: esse resultado só é útil se chegar ao Revan — é lá que antifraude/BKO enxergam a etapa.',src:'Único → callback Revan'},
   {tag:'abandono 5',name:'Documento — frente reprovada',pri:'P1',st:'gap',
    tags:['Quebra sinalizada: envio da frente do doc'],
-   act:'Quebra já apontada no envio da frente do documento. Investigar a causa e capturar o resultado sistêmico do Único por tentativa — não a revisão de foto.',src:'Único (validação)'},
+   act:'Quebra já apontada no envio da frente do documento. Investigar a causa e capturar o resultado sistêmico do Único por tentativa — não a revisão de foto. Ressalva 4: o dado só serve pra auditoria se chegar no Revan.',src:'Único → callback Revan'},
   {tag:'abandono 5b',add:'candidata',name:'Documento — verso reprovado',pri:'P1',st:'gap',tags:[],
-   act:'Nova: o fluxo tem uma decisão de verso separada da frente, mas sem quebra mapeada. Mesmo tratamento do Único por tentativa. Validar se é ponto de perda real.',src:'Único (validação)'},
+   act:'Nova: o fluxo tem uma decisão de verso separada da frente, mas sem quebra mapeada. Mesmo tratamento do Único por tentativa, mesma dependência do callback ao Revan. Validar se é ponto de perda real.',src:'Único → callback Revan'},
+  {tag:'abandono 5c',add:'candidata',name:'Limbo de callback (fotos)',pri:'P1',st:'gap',tags:[],
+   act:'Nova: mesmo risco do contrato (ressalva 4), mas para selfie/documentos. Único valida, mas o callback ao Revan pode falhar ou atrasar — cliente aprovado no Único fica sem status para o antifraude/BKO enxergar. Criar timeout + evento de callback pendente/falho.',src:'Revan (fila de callback)'},
   {tag:'abandono 6',name:'Falha na assinatura do contrato',pri:'P1',st:'ress',
    tags:['but_onb_contrato_conf_sim','but_onb_contrato_conf_nao','but_onb_contrato_assin_sucesso','but_onb_contrato_assin_erro','but_onb_contrato_ir_final','but_onb_contrato_cancel_final'],
-   act:'Conjunto mais completo. Ressalva 3: confirmar que os eventos de contrato não se misturam com os de etiqueta na tela dinâmica. Troca de plano está fora do escopo deste tracking.',src:'D4Sign'},
+   act:'Ressalva 3: confirmar que os eventos de contrato não se misturam com os de etiqueta na tela dinâmica (troca de plano fora do escopo). Ressalva 4: assinatura roda como serviço embedado — o evento confiável é o callback recebido pelo Revan, não apenas o "sucesso" no app. Sem esse retorno, o cliente pode assinar e o fluxo ficar preso sem gerar abandono explícito.',src:'D4Sign → callback Revan'},
+  {tag:'abandono 6b',add:'candidata',name:'Limbo de callback (contrato)',pri:'P1',st:'gap',tags:[],
+   act:'Nova: cliente assina no serviço embedado mas o callback ao Revan falha ou atrasa. Hoje não existe evento para esse estado — o cliente trava sem contar como sucesso nem como abandono. Criar timeout + evento de callback pendente/falho.',src:'Revan (fila de callback)'},
  ]},
  {n:3,t:'Auditoria e disponibilidade',breaks:[
   {tag:'abandono 7',name:'Reprovado na auditoria',pri:'P2',st:'gap',tags:[],
-   act:'Correção: não há informação dos motivos de reprovação hoje. Dá pra ver que reprovou, não por quê. Criar captura de motivo (+ lead time) — sem isso não dá pra atacar a causa.',src:'Backoffice / Revan'},
+   act:'Manual do Vendedor confirma: ~90% da auditoria de Fibra é automática (sem ação do vendedor); só FWA é 100% manual (SLA 15min). Vendedor só age se SLA expirar ou houver sinalização de risco. Falta o indicador agregado — o processo é conhecido, o volume/motivo por caso não.',src:'Antifraude / BKO (via Revan)',
+   motivos:[{n:'SLA expirado (parada além do prazo)',vol:35},{n:'Suspeita de risco / fraude',vol:25},{n:'Duplicidade cadastral',vol:22},{n:'Dados incorretos ou incompletos',vol:18}]},
   {tag:'abandono 8a',name:'Disponibilidade — sem viabilidade',pri:'P2',st:'gap',tags:[],
-   act:'Correção: a verificação de disponibilidade da fibra não tem tracking. Criar evento de resultado por motivo (cobertura, porta, coordenada) + flag auto/manual. "Coordenada" liga ao projeto de captura automática.',src:'BrisaAgenda + Maps API'},
+   act:'Correção: a verificação de disponibilidade da fibra não tem tracking. Criar evento de resultado por motivo (cobertura, porta, coordenada) + flag auto/manual. "Coordenada" liga ao projeto de captura automática.',src:'BrisaAgenda + Maps API',
+   motivos:[{n:'Sem cobertura na região',vol:35},{n:'Porta indisponível',vol:30},{n:'Coordenada incorreta/imprecisa',vol:25},{n:'Outro',vol:10}]},
   {tag:'abandono 8b',add:'nova',name:'Rota não confirmada',pri:'P2',st:'gap',tags:[],
    act:'Nova (fibra): a confirmação de rota é uma etapa separada da disponibilidade e também está sem tracking — hoje totalmente invisível. Criar evento de resultado da confirmação de rota.',src:'BrisaAgenda'},
  ]},
  {n:4,t:'Agendamento e instalação',breaks:[
   {tag:'abandono 9-pre',add:'candidata',name:'Agendamento não concluído',pri:'P3',st:'gap',tags:[],
    act:'Nova: a decisão "agendamento concluído?" não tinha quebra no fluxo original. Cliente vê os horários mas pode não confirmar. Verificar se há evento; provável gap.',src:'BrisaAgenda'},
+  {tag:'abandono 9b',add:'nova',name:'Rota indisponível (agendamento)',pri:'P3',st:'gap',tags:[],
+   act:'Nova (Manual do Vendedor): "Rota indisponível" reaparece como caso do Backoffice Mapas na fase de agendamento — distinto da confirmação técnica de rota da Fase 3 (abandono 8b, Redes FTTH). Pode ser rota que estava ok na efetivação e virou indisponível depois, ou uma segunda checagem. Validar se é o mesmo evento ou um estado novo.',src:'Backoffice Mapas'},
   {tag:'abandono 9',name:'Contato de confirmação sem sucesso',pri:'P3',st:'gap',tags:[],
    act:'Criar evento de tentativa/resultado de contato, amarrado ao orçamento.',src:'Genesys / OLOS'},
-  {tag:'abandono 10',name:'Instalação não realizada',pri:'P3',st:'ress',tags:['Base do time de IAT (improdutivas + desatribuições)'],
-   act:'Correção: são as improdutivas e desatribuições acompanhadas pelo time de IAT. Reaproveitar essa base e amarrar ao ID do orçamento no funil. Dois modos: improdutiva (visita sem sucesso) e desatribuição (OS retirada do técnico antes da visita).',src:'IAT'},
+  {tag:'abandono 10a',name:'Improdutiva',pri:'P3',st:'ress',tags:['Base do time de IAT'],
+   act:'Correção: acompanhada pelo time de IAT. Visita realizada sem sucesso — reaproveitar a base e amarrar ao ID do orçamento no funil. Manual do Vendedor confirma as categorias: técnico não compareceu, falha técnica no local, cliente desistiu na execução, ativação não concluída.',src:'IAT · Operações/Field Service',
+   motivos:[{n:'Técnico não compareceu',vol:30},{n:'Falha técnica no local',vol:25},{n:'Cliente desistiu na execução',vol:25},{n:'Ativação não concluída',vol:20}]},
+  {tag:'abandono 10b',name:'Desatribuição',pri:'P3',st:'ress',tags:['Base do time de IAT'],
+   act:'Correção: acompanhada pelo time de IAT. OS retirada do técnico antes da visita — sinal de capacidade/alocação, não de execução em campo. Medir separado da improdutiva.',src:'IAT',
+   motivos:[{n:'Reagendamento solicitado',vol:30},{n:'Técnico indisponível',vol:25},{n:'Rota inviável',vol:25},{n:'Outro',vol:20}]},
  ]},
 ];
 
+const MOT=[
+ {grp:'Documentação', items:[
+   {n:'FOTOS/CON', entrantes:70, efetivados:45},
+   {n:'DOCUMENTAÇÃO INCOMPLETA', entrantes:60, efetivados:40},
+   {n:'ARQUIVOS CNPJ', entrantes:15, efetivados:9},
+   {n:'COMPROVANTE CNPJ', entrantes:20, efetivados:14},
+   {n:'RG', entrantes:15, efetivados:10},
+ ]},
+ {grp:'Endereço / localização', items:[
+   {n:'BAIRRO', entrantes:25, efetivados:17},
+   {n:'CEP', entrantes:20, efetivados:15},
+   {n:'CIDADE INCORRETA', entrantes:18, efetivados:12},
+   {n:'CORREÇÃO DE NÚMERO', entrantes:15, efetivados:10},
+   {n:'LOGRADOURO', entrantes:20, efetivados:13},
+   {n:'PONTOS DE REFERENCIA', entrantes:22, efetivados:14},
+   {n:'PENDÊNCIA NO MAPA', entrantes:20, efetivados:14},
+ ]},
+ {grp:'Dados cadastrais do cliente', items:[
+   {n:'NOME DO CLIENTE', entrantes:30, efetivados:24},
+   {n:'DATA DE NASCIMENTO', entrantes:25, efetivados:20},
+   {n:'DDD INVÁLIDO', entrantes:20, efetivados:15},
+   {n:'E-MAIL', entrantes:15, efetivados:11},
+ ]},
+ {grp:'Comercial / financeiro', items:[
+   {n:'CLIENTE COM DÉBITO', entrantes:70, efetivados:45},
+   {n:'PLANO DIVERGENTE (VEND.)', entrantes:40, efetivados:25},
+   {n:'DESCONTO DE INSTALAÇÃO', entrantes:25, efetivados:15},
+   {n:'CANCELAMENTO ORÇA/FILA', entrantes:30, efetivados:18},
+   {n:'PORTABILIDADE', entrantes:25, efetivados:17},
+   {n:'PENDENTE DE REGULARIZAÇÃO', entrantes:20, efetivados:10},
+ ]},
+];
+function buildPG(){
+ const el=document.getElementById('pgTable');
+ if(!el)return;
+ let rows=`<tr><th>Motivo</th><th class="num">Entrantes</th><th class="num">Efetivados</th><th class="num">Efetivação</th></tr>`;
+ let idx=0;
+ MOT.forEach(g=>{
+  rows+=`<tr class="grp"><td colspan="4">${g.grp}</td></tr>`;
+  g.items.forEach(it=>{
+   const i=idx++;
+   rows+=`<tr><td>${it.n}</td><td class="num"><input type="number" id="pgIn${i}" value="${it.entrantes}" min="0" oninput="updatePG(${i})"></td><td class="num"><input type="number" id="pgEf${i}" value="${it.efetivados}" min="0" oninput="updatePG(${i})"></td><td class="num rate" id="pgRate${i}"></td></tr>`;
+  });
+ });
+ el.innerHTML=rows;
+ for(let i=0;i<idx;i++)updatePG(i);
+}
+function updatePG(i){
+ const inp=Math.max(0,+document.getElementById('pgIn'+i).value||0);
+ const ef=Math.max(0,+document.getElementById('pgEf'+i).value||0);
+ const pct=inp?Math.round(ef/inp*100):0;
+ document.getElementById('pgRate'+i).textContent=pct+'%';
+}
+buildPG();
 const map=document.getElementById('map');
-PH.forEach(p=>{
- const lane=LANE[p.n];
- const cards=p.breaks.map(b=>{
-  const cls=b.st==='gap'?'':(b.st==='ress'?'ress':'ok');
-  const blk=b.blk?'blk':'';
-  const stlabel=b.st==='gap'?'gap real':(b.st==='ress'?'tagueado c/ ressalva':'confiável');
-  const tagsHtml=b.tags&&b.tags.length?b.tags.map(t=>`<code>${t}</code>`).join(''):'<span class="none">nenhum evento ainda</span>';
-  const addb=b.add?`<span class="addb ${b.add}">${b.add}</span>`:'';
-  return `<div class="tc ${cls} ${blk} ${b.add?'add-'+b.add:''}" data-pri="${b.pri}" data-st="${b.st}" data-add="${b.add||''}">
-    <div class="th"><span class="tag">${b.tag}</span><span class="name">${b.name}</span>
-      <span class="badges">${addb}<span class="pri ${b.pri}">${b.pri}</span><span class="stt ${b.st}">${stlabel}</span></span></div>
+let cardIdx=0;
+function cardHTML(b){
+ const myIdx=cardIdx++;
+ const cls=b.st==='gap'?'':(b.st==='ress'?'ress':'ok');
+ const blk=b.blk?'blk':'';
+ const stlabel=b.st==='gap'?'gap real':(b.st==='ress'?'tagueado c/ ressalva':'confiável');
+ const tagsHtml=b.tags&&b.tags.length?b.tags.map(t=>`<code>${t}</code>`).join(''):'<span class="none">nenhum evento ainda</span>';
+ const addb=b.add?`<span class="addb ${b.add}">${b.add}</span>`:'';
+ let motHtml='';
+ if(b.motivos&&b.motivos.length){
+  motHtml=`<button class="toggle-mot" id="tg${myIdx}" onclick="toggleMot(${myIdx})"><span class="cv-arrow">▶</span>Ver motivos (${b.motivos.length})</button>
+   <div class="motpanel" id="mp${myIdx}"><div class="mp-note">números ilustrativos — editar ao coletar dado real</div>${b.motivos.map((m,j)=>`<div class="mp-row"><span class="mn">${m.n}</span><input type="number" id="mi${myIdx}_${j}" value="${m.vol}" min="0" oninput="renderMotBars(${myIdx})"><span class="mp-pct" id="mpc${myIdx}_${j}"></span></div><div class="mp-bar" id="mb${myIdx}_${j}"></div>`).join('')}</div>`;
+ }
+ return `<div class="tc ${cls} ${blk} ${b.add?'add-'+b.add:''}" data-pri="${b.pri}" data-st="${b.st}" data-add="${b.add||''}">
+    <div class="tc-meta"><span class="tc-tagtxt">${b.tag}</span>${addb}</div>
+    <div class="th"><span class="name">${b.name}</span>
+      <span class="badges"><span class="pri ${b.pri}">${b.pri}</span><span class="stt ${b.st}">${stlabel}</span></span></div>
     <div class="field"><div class="fl">Eventos já existentes</div><div class="tags">${tagsHtml}</div></div>
     <div class="field act"><div class="fl">Ressalva → ação</div><div class="fv">${b.act}</div></div>
     <div class="field"><div class="fl">Fonte confiável do sinal</div><span class="src">${b.src}</span></div>
+    ${motHtml}
   </div>`;
- }).join('');
- map.innerHTML+=`<div class="phase" data-phase="${p.n}"><h2><span class="pn">FASE ${p.n}</span>${p.t}<span class="lane" style="background:var(--${lane.k})">${lane.n}</span></h2><div class="cards">${cards}</div></div>`;
+}
+function toggleMot(i){
+ const tg=document.getElementById('tg'+i),mp=document.getElementById('mp'+i);
+ const open=mp.classList.toggle('open');
+ tg.classList.toggle('open',open);
+ tg.childNodes[1].textContent=open?' Ocultar motivos':' Ver motivos';
+ if(open)renderMotBars(i);
+}
+function renderMotBars(i){
+ const panel=document.getElementById('mp'+i);
+ const inputs=[...panel.querySelectorAll('input')];
+ const vals=inputs.map(inp=>Math.max(0,+inp.value||0));
+ const tot=vals.reduce((a,b)=>a+b,0)||1;
+ inputs.forEach((inp,j)=>{
+  const pct=Math.round(vals[j]/tot*100);
+  document.getElementById('mpc'+i+'_'+j).textContent=pct+'%';
+  document.getElementById('mb'+i+'_'+j).style.width=pct+'%';
+ });
+}
+
+PH.forEach(p=>{
+ const lane=LANE[p.n];
+ const body=`<div class="cards">${p.breaks.map(cardHTML).join('')}</div>`;
+ map.innerHTML+=`<div class="phase" data-phase="${p.n}"><h2><span class="pn">FASE ${p.n}</span>${p.t}<span class="lane" style="background:var(--${lane.k})">${lane.n}</span></h2>${body}</div>`;
 });
 function filt(f){
  document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
@@ -261,18 +448,25 @@ function filt(f){
 const F=[
  {name:'Orçamentos criados', vol:1000, ph:1},
  {name:'Sem débito', vol:900, ph:1, leak:{n:'bloqueio', t:'Débito pendente'}},
- {name:'Aprovado no antifraude', vol:800, ph:1, leak:{n:'bloqueio', t:'Barrado no antifraude'}},
+ {name:'Aprovado no antifraude', vol:800, ph:1, leak:{n:'bloqueio', t:'Barrado no antifraude'},
+  motivos:[{n:'Score abaixo do mínimo',vol:40},{n:'CPF em lista restritiva',vol:25},{n:'Divergência cadastral',vol:20},{n:'Duplicidade de CPF/conta',vol:10},{n:'Outro',vol:5}]},
  {name:'Entrou no app', vol:750, ph:1, leak:{n:'abandono 1', t:'Não iniciou formalização'}},
  {name:'Etiqueta assinada', vol:680, ph:2, leak:{n:'abandono 2', t:'Etiqueta'}},
  {name:'Selfie validada', vol:560, ph:2, leak:{n:'abandono 3-4', t:'Biometria / selfie'}},
  {name:'Frente do doc validada', vol:500, ph:2, leak:{n:'abandono 5', t:'Documento — frente'}},
  {name:'Verso do doc validado', vol:470, ph:2, leak:{n:'abandono 5b', t:'Documento — verso'}},
  {name:'Contrato assinado', vol:440, ph:2, leak:{n:'abandono 6', t:'Assinatura do contrato'}},
- {name:'Auditoria aprovada', vol:415, ph:3, leak:{n:'abandono 7', t:'Reprovado na auditoria'}},
- {name:'Disponibilidade confirmada', vol:385, ph:3, leak:{n:'abandono 8a', t:'Sem viabilidade'}},
- {name:'Rota confirmada', vol:365, ph:3, leak:{n:'abandono 8b', t:'Rota (fibra)'}},
- {name:'Agendamento confirmado', vol:345, ph:4, leak:{n:'abandono 9', t:'Contato / não concluído'}},
- {name:'Instalado — fibra ativa', vol:310, ph:4, leak:{n:'abandono 10', t:'Improdutiva / desatribuição (IAT)'}},
+ {name:'Auditoria aprovada', vol:415, ph:3, leak:{n:'abandono 7', t:'Reprovado / parado na auditoria'},
+  motivos:[{n:'SLA expirado (parada além do prazo)',vol:35},{n:'Suspeita de risco / fraude',vol:25},{n:'Duplicidade cadastral',vol:22},{n:'Dados incorretos ou incompletos',vol:18}]},
+ {name:'Disponibilidade confirmada', vol:385, ph:3, leak:{n:'abandono 8a', t:'Sem viabilidade'},
+  motivos:[{n:'Sem cobertura na região',vol:35},{n:'Porta indisponível',vol:30},{n:'Coordenada incorreta/imprecisa',vol:25},{n:'Outro',vol:10}]},
+ {name:'Rota confirmada (efetivação)', vol:365, ph:3, leak:{n:'abandono 8b', t:'Rota — Redes FTTH'}},
+ {name:'Agendamento confirmado', vol:345, ph:4, leak:{n:'abandono 9-pre/9', t:'Não concluído / contato sem sucesso'}},
+ {name:'Rota ainda disponível (agendamento)', vol:330, ph:4, leak:{n:'abandono 9b', t:'Rota indisponível — BKO Mapas'}},
+ {name:'Instalação sem improdutiva', vol:305, ph:4, leak:{n:'abandono 10a', t:'Improdutiva'},
+  motivos:[{n:'Técnico não compareceu',vol:30},{n:'Falha técnica no local',vol:25},{n:'Cliente desistiu na execução',vol:25},{n:'Ativação não concluída',vol:20}]},
+ {name:'Instalado — fibra ativa', vol:280, ph:4, leak:{n:'abandono 10b', t:'Desatribuição'},
+  motivos:[{n:'Reagendamento solicitado',vol:30},{n:'Técnico indisponível',vol:25},{n:'Rota inviável',vol:25},{n:'Outro',vol:20}]},
 ];
 const PHC={1:'var(--canal)',2:'var(--app)',3:'var(--bko)',4:'var(--agenda)'};
 let fnBuilt=false;
@@ -280,7 +474,29 @@ function buildFunnel(){
  const track=document.getElementById('funnel');
  track.innerHTML=F.map((s,i)=>`<div class="fn-stage">${s.leak?`<div class="fn-leak" id="lk${i}"></div>`:''}<div class="fn-barwrap" id="bw${i}"><div class="fn-bar" style="background:${i===F.length-1?'var(--ok)':PHC[s.ph]}"><span class="nm">${s.name}</span><span class="rt"><input type="number" id="in${i}" value="${s.vol}" min="0"><span class="fn-pct" id="pc${i}"></span></span></div></div></div>`).join('');
  F.forEach((s,i)=>document.getElementById('in'+i).addEventListener('input',updateFunnel));
+ buildFunnelMotivos();
  updateFunnel();
+}
+function buildFunnelMotivos(){
+ const el=document.getElementById('funnelMotivos');
+ const items=F.filter(s=>s.motivos&&s.motivos.length);
+ el.innerHTML=items.map((s,idx)=>{
+  const rows=s.motivos.map((m,j)=>`<div class="mp-row"><span class="mn">${m.n}</span><input type="number" id="fnmi${idx}_${j}" value="${m.vol}" min="0" oninput="renderFnMotBars(${idx})"><span class="mp-pct" id="fnmpc${idx}_${j}"></span></div><div class="mp-bar" id="fnmb${idx}_${j}"></div>`).join('');
+  return `<div class="fm-card"><div class="fm-h"><span class="fm-tag">${s.leak.n}</span>${s.leak.t}</div><div class="fm-note">números ilustrativos — editar ao coletar dado real</div>${rows}</div>`;
+ }).join('');
+ items.forEach((s,idx)=>renderFnMotBars(idx));
+}
+function renderFnMotBars(idx){
+ const card=document.querySelectorAll('.fm-card')[idx];
+ if(!card)return;
+ const inputs=[...card.querySelectorAll('input')];
+ const vals=inputs.map(inp=>Math.max(0,+inp.value||0));
+ const tot=vals.reduce((a,b)=>a+b,0)||1;
+ inputs.forEach((inp,j)=>{
+  const pct=Math.round(vals[j]/tot*100);
+  document.getElementById('fnmpc'+idx+'_'+j).textContent=pct+'%';
+  document.getElementById('fnmb'+idx+'_'+j).style.width=pct+'%';
+ });
 }
 function updateFunnel(){
  const vols=F.map((s,i)=>Math.max(0,+document.getElementById('in'+i).value||0));
@@ -301,8 +517,10 @@ function updateFunnel(){
 function setView(v){
  document.getElementById('view-map').classList.toggle('hidden',v!=='map');
  document.getElementById('view-funnel').classList.toggle('hidden',v!=='funnel');
+ document.getElementById('view-bko').classList.toggle('hidden',v!=='bko');
  document.getElementById('vt-map').classList.toggle('on',v==='map');
  document.getElementById('vt-funnel').classList.toggle('on',v==='funnel');
+ document.getElementById('vt-bko').classList.toggle('on',v==='bko');
  if(v==='funnel'&&!fnBuilt){buildFunnel();fnBuilt=true;}
 }
 </script>
