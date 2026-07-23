@@ -42,6 +42,8 @@
   .fc .ft{font-size:11px;color:var(--ok);font-weight:700;margin-bottom:5px}
   .fc .fh{font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:3px}
   .fc p{font-size:12.5px;color:var(--ink-2)}
+  .fc.warn{border-top-color:var(--ress)}
+  .fc.warn .ft{color:var(--ress)}
 
   .controls{display:flex;gap:8px;align-items:center;margin:30px 0 4px;position:sticky;top:0;z-index:20;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .controls::-webkit-scrollbar{display:none}
@@ -94,7 +96,7 @@
   .field.act .fl{color:var(--muted)} .field.act .fv{color:var(--ink);font-weight:400}
   .src{display:inline-block;font-size:11.5px;font-weight:600;color:var(--ink);background:#f2f0ec;padding:2px 8px;border-radius:5px}
   footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-  .viewtabs{display:flex;gap:6px;margin:22px 0 2px}
+  .viewtabs{display:flex;gap:6px;margin:22px 0 2px;flex-wrap:wrap}
   .vtab{border:1px solid var(--line);background:var(--white);color:var(--ink-2);padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
   .vtab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
   .fn-banner{background:var(--ress-soft);border:1px solid #f0dcbd;color:#7a5200;font-size:12.5px;padding:11px 14px;border-radius:10px;margin:22px 0 18px}
@@ -169,6 +171,29 @@
   .pend-tbl tr.grp td{background:var(--paper);font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:7px 12px}
   .pend-tbl input{width:64px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12.5px;font-weight:600;text-align:center;font-family:inherit;background:var(--paper);color:var(--ink)}
   .pend-tbl .rate{font-weight:700;color:var(--ok)}
+  .chan-flow{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:14px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+  .chan-group{min-width:150px;display:flex;flex-direction:column;gap:6px}
+  .chan-head{color:#fff;font-size:12px;font-weight:700;padding:9px 12px;border-radius:9px;text-align:center}
+  .chan-chip{background:var(--white);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12.5px;font-weight:500;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+  .chan-sys{font-size:10px;color:var(--muted);font-weight:600}
+  .chan-sys.unk{color:#c7c5c0}
+  .chan-owner{font-size:10.5px;color:var(--muted);font-weight:400}
+  .bp-legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px}
+  .bp-lg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);font-weight:600}
+  .bp-dot{width:18px;height:18px;border-radius:50%;color:#fff;font-size:9.5px;font-weight:800;display:grid;place-items:center;flex:0 0 auto}
+  .bp-flow{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+  .bp-stage{flex:0 0 200px;display:flex;flex-direction:column;gap:8px}
+  .bp-stage-h{background:var(--ink);color:#fff;text-align:center;font-weight:700;font-size:12px;padding:9px 8px;border-radius:9px}
+  .bp-lane-card{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--line);border-radius:10px;padding:10px 11px;flex:1}
+  .bp-lane-card.ln-cliente{border-top-color:var(--cliente)}
+  .bp-lane-card.ln-front{border-top-color:var(--app)}
+  .bp-lane-card.ln-back{border-top-color:var(--bko)}
+  .bp-lane-card.ln-sys{border-top-color:var(--canal)}
+  .bp-lane-tag{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+  .bp-lane-tag .bp-dot{width:16px;height:16px;font-size:8.5px}
+  .bp-lane-tag span.lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);font-weight:700}
+  .bp-lane-card p{font-size:12px;color:var(--ink);line-height:1.4}
+  .bp-lane-card.bp-empty p{color:#c7c5c0}
   @media print{.controls{display:none}body{background:#fff}header::after{display:none}.tc,.cv{break-inside:avoid}}
 </style>
 </head>
@@ -187,6 +212,7 @@
     <button class="vtab on" id="vt-map" onclick="setView('map')">Tracking</button>
     <button class="vtab" id="vt-funnel" onclick="setView('funnel')">Funil de conversão</button>
     <button class="vtab" id="vt-bko" onclick="setView('bko')">Backoffice comercial</button>
+    <button class="vtab" id="vt-bp" onclick="setView('bp')">Blueprint</button>
   </div>
 
   <div id="view-map">
@@ -225,10 +251,51 @@
 
   <div class="sechd">Fundações de medição</div>
   <div class="found">
-    <div class="fc"><div class="ft">Chave de correlação</div><div class="fh">ID do orçamento</div><p>Correlacionador único do funil — cruzamento por CPF está bloqueado.</p></div>
+    <div class="fc"><div class="ft">Chave de correlação</div><div class="fh">ID do orçamento</div><p>Correlacionador do funil dentro de cada sistema — cruzamento por CPF está bloqueado. Ver ressalva ao lado: nem todo canal escreve no mesmo sistema.</p></div>
     <div class="fc"><div class="ft">Início da formalização</div><div class="fh">Contador "Quero Contratar"</div><p>Já existe. Serve de denominador de quem começou o fluxo no app.</p></div>
     <div class="fc"><div class="ft">Cuidado de modelagem</div><div class="fh">Jornada não-linear</div><p>Fotos e contratos fora de ordem: medir por estado, não por sequência.</p></div>
+    <div class="fc warn"><div class="ft">Ressalva de origem</div><div class="fh">Brisa Vendas = Revan mobile</div><p>Brisa Vendas não é um sistema à parte — é a versão mobile do Revan. Canais que usam BV ainda escrevem no Revan. Commerce (venda de 5G) e Data Cake ficam fora do escopo deste tracking, que é só fibra.</p></div>
   </div>
+
+  <p style="font-size:12.5px;color:var(--muted);margin:14px 0 10px">Canais & responsáveis — apenas fibra. Varejo da Rose e Embaixadores/Rangel vendem 5G, fora do escopo.</p>
+  <div class="chan-flow">
+    <div class="chan-group">
+      <div class="chan-head" style="background:var(--canal)">Flávio Franco</div>
+      <div class="chan-chip">NGC<span class="chan-sys">Brisa Vendas</span></div>
+      <div class="chan-chip">PAP<span class="chan-sys">Brisa Vendas</span></div>
+      <div class="chan-chip">Quiosque Interior<span class="chan-sys unk">—</span></div>
+      <div class="chan-chip">Donos de cidade<span class="chan-sys unk">—</span></div>
+    </div>
+    <div class="chan-group">
+      <div class="chan-head" style="background:var(--app)">Rose</div>
+      <div class="chan-chip">Agente autorizado PAP<span class="chan-sys">Revan · Brisa Vendas</span></div>
+      <div class="chan-chip">Agente autorizado Digital<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Indica Brisa<span class="chan-sys">Revan · Brisa Vendas</span></div>
+      <div class="chan-chip">Antenista<span class="chan-sys unk">—</span></div>
+    </div>
+    <div class="chan-group">
+      <div class="chan-head" style="background:var(--cliente)">Davi Agnelo</div>
+      <div class="chan-chip">Lojas revenda<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Lojas próprias<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Pesque & Leve<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Quiosque Shopping<span class="chan-sys">Revan · Brisa Vendas</span></div>
+    </div>
+    <div class="chan-group">
+      <div class="chan-head" style="background:var(--bko)">Suiane</div>
+      <div class="chan-chip">Consultor Digital<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Indique um amigo<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Televendas<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Chat/Rentabilização<span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">Automatização<span class="chan-sys">Revan</span></div>
+    </div>
+    <div class="chan-group">
+      <div class="chan-head" style="background:var(--gap)">Geneci · Paulo Cesar · Leandro</div>
+      <div class="chan-chip">Agility <span class="chan-owner">(Geneci)</span><span class="chan-sys">Brisa Vendas</span></div>
+      <div class="chan-chip">Atendimento ao Cliente <span class="chan-owner">(Paulo Cesar)</span><span class="chan-sys">Revan</span></div>
+      <div class="chan-chip">IAT <span class="chan-owner">(Leandro)</span><span class="chan-sys">Brisa Vendas</span></div>
+    </div>
+  </div>
+  <p style="font-size:11.5px;color:var(--muted);margin:10px 0 18px">Brisa Vendas confirmado como Revan mobile — todo canal de fibra acima escreve no Revan, sem fragmentação de sistema de origem.</p>
 
   <div class="sechd">Reconciliação por ponto de quebra</div>
   <div class="controls">
@@ -333,9 +400,20 @@
     <table class="pend-tbl" id="pgTable"></table>
   </div>
 
+  <div id="view-bp" class="hidden">
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Visão de blueprint de serviço — cliente, frontstage, bastidores e sistemas, lado a lado por etapa da jornada. Arraste para o lado para ver todas as etapas.</p>
+    <div class="bp-legend">
+      <span class="bp-lg"><span class="bp-dot" style="background:var(--cliente)">C</span>Cliente</span>
+      <span class="bp-lg"><span class="bp-dot" style="background:var(--app)">F</span>Frontstage · App</span>
+      <span class="bp-lg"><span class="bp-dot" style="background:var(--bko)">B</span>Bastidores · BKO</span>
+      <span class="bp-lg"><span class="bp-dot" style="background:var(--canal)">S</span>Sistemas</span>
+    </div>
+    <div class="bp-flow" id="bpFlow"></div>
+  </div>
+
   <footer>
     <span>Status: <b style="color:var(--ok)">confiável</b> · <b style="color:var(--ress)">tagueado c/ ressalva</b> · <b style="color:var(--gap)">gap real</b> — avaliação a validar com TI/BI</span>
-    <span>v2.7 · diagrama oficial da auditoria · viabilidade técnica unificada · +4 casos de report do BKO</span>
+    <span>v3.5 · blueprint em cards coloridos por etapa</span>
   </footer>
 </div>
 
@@ -580,14 +658,78 @@ function updateFunnel(){
  F.forEach((s,i)=>{if(i>0&&s.leak){const lost=vols[i-1]-vols[i],dp=vols[i-1]?lost/vols[i-1]*100:0;if(dp>md.dp)md={dp,n:s.leak.n,t:s.leak.t,lost};}});
  document.getElementById('fnSum').innerHTML=`<div class="fs"><div class="fsn">${conv}%</div><div class="fsl">conversão ponta a ponta</div></div><div class="fs"><div class="fsn">${top-last}</div><div class="fsl">perdidos no caminho (de ${top})</div></div><div class="fs hot"><div class="fsn">${md.n}</div><div class="fsl">maior queda relativa · ${md.t} (${Math.round(md.dp)}%)</div></div>`;
 }
+const BP_STAGES=['Orçamento','Cadastro','Onboarding no app','Auditoria','Disponibilidade e rota','Agendamento','Instalação'];
+const BP_LANES=[
+ {n:'Cliente', rows:[
+  'Solicita internet fibra',
+  'Recebe link, baixa e acessa o app',
+  'Assina etiqueta, biometria, documentos, contratos e endereço',
+  'Aguarda — sem ação, exceto se contatado',
+  'Aguarda — sem ação direta',
+  'Escolhe data e horário',
+  'Recebe o técnico em casa',
+ ]},
+ {n:'Frontstage (App)', rows:[
+  'Canal de venda cria o orçamento',
+  'App Brisa Cliente — tela inicial',
+  'App — checklist, biometria, documento, contratos',
+  'Status "em auditoria" no app',
+  '—',
+  'App/Canal — visualização de horários',
+  '—',
+ ]},
+ {n:'Bastidores (BKO)', rows:[
+  'Antifraude avalia score · Cobrança avalia débito',
+  '—',
+  'BKO Correção — tratativa de pendências (docs/dados)',
+  'Auditoria antifraude (auto ~90% / manual) · BKO Correção se pendência · Antifraude se SLA expirado',
+  'Redes FTTH — valida endereço, coordenadas, cobertura, porta e rota',
+  'BKO Mapas — cancelamento, renegociação, rota indisponível · contato de confirmação',
+  'Operações / Field Service · IAT — improdutiva e desatribuição',
+ ]},
+ {n:'Sistemas', rows:[
+  'Revan · motor de score/antifraude',
+  'Revan (login same-day como proxy)',
+  'Único (biometria) · D4Sign (assinatura) · callback Revan',
+  'Revan · Antifraude',
+  'BrisaAgenda · Google Maps API',
+  'BrisaAgenda · Genesys/OLOS',
+  'BrisaAgenda · base IAT',
+ ]},
+];
+const BP_LANE_META=[
+ {cls:'ln-cliente', dot:'var(--cliente)', code:'C', label:'Cliente'},
+ {cls:'ln-front', dot:'var(--app)', code:'F', label:'Frontstage'},
+ {cls:'ln-back', dot:'var(--bko)', code:'B', label:'Bastidores'},
+ {cls:'ln-sys', dot:'var(--canal)', code:'S', label:'Sistemas'},
+];
+function buildBP(){
+ const el=document.getElementById('bpFlow');
+ if(!el)return;
+ el.innerHTML=BP_STAGES.map((stage,si)=>{
+  const cards=BP_LANE_META.map((meta,li)=>{
+   const text=BP_LANES[li].rows[si];
+   const empty=text==='—'?' bp-empty':'';
+   return `<div class="bp-lane-card ${meta.cls}${empty}">
+     <div class="bp-lane-tag"><span class="bp-dot" style="background:${meta.dot}">${meta.code}</span><span class="lbl">${meta.label}</span></div>
+     <p>${text}</p>
+   </div>`;
+  }).join('');
+  return `<div class="bp-stage"><div class="bp-stage-h">${stage}</div>${cards}</div>`;
+ }).join('');
+}
+let bpBuilt=false;
 function setView(v){
  document.getElementById('view-map').classList.toggle('hidden',v!=='map');
  document.getElementById('view-funnel').classList.toggle('hidden',v!=='funnel');
  document.getElementById('view-bko').classList.toggle('hidden',v!=='bko');
+ document.getElementById('view-bp').classList.toggle('hidden',v!=='bp');
  document.getElementById('vt-map').classList.toggle('on',v==='map');
  document.getElementById('vt-funnel').classList.toggle('on',v==='funnel');
  document.getElementById('vt-bko').classList.toggle('on',v==='bko');
+ document.getElementById('vt-bp').classList.toggle('on',v==='bp');
  if(v==='funnel'&&!fnBuilt){buildFunnel();fnBuilt=true;}
+ if(v==='bp'&&!bpBuilt){buildBP();bpBuilt=true;}
 }
 </script>
 </body>
